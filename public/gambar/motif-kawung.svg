@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <defs>
+    <pattern id="kawung" width="60" height="60" patternUnits="userSpaceOnUse">
+      <g fill="#7b212e">
+        <ellipse cx="30" cy="15" rx="11" ry="13"/>
+        <ellipse cx="30" cy="45" rx="11" ry="13"/>
+        <ellipse cx="15" cy="30" rx="13" ry="11"/>
+        <ellipse cx="45" cy="30" rx="13" ry="11"/>
+        <circle cx="30" cy="30" r="5" fill="#f5efe6"/>
+      </g>
+    </pattern>
+  </defs>
+  <rect width="240" height="240" fill="url(#kawung)"/>
+</svg>

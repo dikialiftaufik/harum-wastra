@@ -11,6 +11,7 @@
   /* Huruf. Diatur di layout.tsx lewat variabel berikut. */
   --font-display: var(--font-fraunces), Georgia, serif;
   --font-body: var(--font-jakarta), Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), monospace;
 }
 
 body {

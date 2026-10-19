@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <defs>
+    <pattern id="pring" width="56" height="56" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="#7b212e" stroke-linecap="round">
+        <g stroke-width="4">
+          <line x1="14" y1="0" x2="14" y2="56"/>
+          <line x1="8" y1="18" x2="20" y2="18"/>
+          <line x1="8" y1="40" x2="20" y2="40"/>
+          <line x1="42" y1="0" x2="42" y2="56"/>
+          <line x1="36" y1="28" x2="48" y2="28"/>
+          <line x1="36" y1="50" x2="48" y2="50"/>
+        </g>
+        <g stroke-width="3">
+          <path d="M20,16 C30,10 36,12 40,18"/>
+          <path d="M48,44 C40,40 34,42 30,46"/>
+        </g>
+      </g>
+    </pattern>
+  </defs>
+  <rect width="240" height="240" fill="url(#pring)"/>
+</svg>

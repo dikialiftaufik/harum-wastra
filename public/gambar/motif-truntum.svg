@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <defs>
+    <pattern id="truntum" width="36" height="36" patternUnits="userSpaceOnUse">
+      <g fill="#7b212e">
+        <path d="M18,9 L20,16 L27,18 L20,20 L18,27 L16,20 L9,18 L16,16 Z"/>
+        <path d="M0,0 L2,5 L7,7 L2,9 L0,14 L-2,9 L-7,7 L-2,5 Z"/>
+        <path d="M36,0 L38,5 L43,7 L38,9 L36,14 L34,9 L29,7 L34,5 Z"/>
+        <path d="M0,36 L2,41 L7,43 L2,45 L0,50 L-2,45 L-7,43 L-2,41 Z"/>
+        <path d="M36,36 L38,41 L43,43 L38,45 L36,50 L34,45 L29,43 L34,41 Z"/>
+      </g>
+    </pattern>
+  </defs>
+  <rect width="240" height="240" fill="url(#truntum)"/>
+</svg>
