@@ -91,3 +91,39 @@ export const produk: Produk[] = [
 export function formatRupiah(n: number): string {
   return "Rp" + n.toLocaleString("id-ID");
 }
+
+export type Acara = {
+  judul: string;
+  tanggal: string;
+  lokasi: string;
+  ringkas: string;
+  status: string;
+};
+
+// Acara masih berupa rencana. Tanggal dan lokasi tetap ditulis agar halaman tidak kosong.
+export const acara: Acara[] = [
+  {
+    judul: "Lomba Daur Ulang Jelantah",
+    tanggal: "8 November 2026",
+    lokasi: "Bandung",
+    ringkas:
+      "Ajak warga mengumpulkan minyak goreng bekas dan mengubahnya menjadi produk bernilai.",
+    status: "Akan datang",
+  },
+  {
+    judul: "Workshop Buket Lilin Aromaterapi",
+    tanggal: "22 November 2026",
+    lokasi: "Bandung",
+    ringkas:
+      "Belajar membuat buket bunga lilin dari jelantah bersama perajin Nusaflo.",
+    status: "Akan datang",
+  },
+  {
+    judul: "Panen Poin Bank Sampah",
+    tanggal: "13 Desember 2026",
+    lokasi: "Bandung",
+    ringkas:
+      "Penukaran poin menjadi produk bagi penyetor jelantah se-Bandung.",
+    status: "Akan datang",
+  },
+];
