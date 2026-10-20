@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
+import { StatCard } from "@/components/AnimatedCounter";
 
 export default function Beranda() {
   return (
     <>
       {/* ─── Hero Section ─── */}
-      <section className="hero-section relative min-h-[92vh] overflow-hidden">
+      <section className="hero-section relative min-h-[92vh] overflow-hidden reveal-up">
         {/* Background image */}
         <div
           className="absolute inset-0 z-0"
@@ -96,7 +97,7 @@ export default function Beranda() {
       </section>
 
       {/* ─── Mengapa Nusaflo ─── */}
-      <section className="mengapa-section relative overflow-hidden">
+      <section className="mengapa-section relative overflow-hidden reveal-up">
         {/* Full background image */}
         <div
           className="absolute inset-0 z-0"
@@ -128,7 +129,7 @@ export default function Beranda() {
           {/* 4 cards with graphic icons */}
           <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {/* Card 1 - Mulai dari dapur Anda */}
-            <div className="mengapa-card flex flex-col items-center text-center">
+            <div className="mengapa-card reveal-stagger-1 flex flex-col items-center text-center">
               <div className="mb-4 h-44 w-44">
                 <Image
                   src="/graphics/house.png"
@@ -149,7 +150,7 @@ export default function Beranda() {
             </div>
 
             {/* Card 2 - Dikonversi menjadi poin */}
-            <div className="mengapa-card flex flex-col items-center text-center">
+            <div className="mengapa-card reveal-stagger-2 flex flex-col items-center text-center">
               <div className="mb-4 h-44 w-44">
                 <Image
                   src="/graphics/points.png"
@@ -170,7 +171,7 @@ export default function Beranda() {
             </div>
 
             {/* Card 3 - Ditukar dengan hadiah bermakna */}
-            <div className="mengapa-card flex flex-col items-center text-center">
+            <div className="mengapa-card reveal-stagger-3 flex flex-col items-center text-center">
               <div className="mb-4 h-44 w-44">
                 <Image
                   src="/graphics/gift.png"
@@ -191,7 +192,7 @@ export default function Beranda() {
             </div>
 
             {/* Card 4 - Bersama menjaga lingkungan */}
-            <div className="mengapa-card flex flex-col items-center text-center">
+            <div className="mengapa-card reveal-stagger-4 flex flex-col items-center text-center">
               <div className="mb-4 h-44 w-44">
                 <Image
                   src="/graphics/earth.png"
@@ -215,7 +216,7 @@ export default function Beranda() {
       </section>
 
       {/* ─── Cara Kerja (4 Langkah) ─── */}
-      <section className="cara-kerja-section relative overflow-hidden">
+      <section className="cara-kerja-section relative overflow-hidden reveal-up">
         {/* Full background image */}
         <div
           className="absolute inset-0 z-0"
@@ -250,7 +251,7 @@ export default function Beranda() {
           {/* 4 Step Cards */}
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {/* Step 1 */}
-            <div className="cara-kerja-card group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+            <div className="cara-kerja-card reveal-stagger-1 group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
               {/* Image */}
               <div className="relative aspect-[4/3] overflow-hidden">
                 <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-cream">
@@ -284,7 +285,7 @@ export default function Beranda() {
             </div>
 
             {/* Step 2 */}
-            <div className="cara-kerja-card group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+            <div className="cara-kerja-card reveal-stagger-2 group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-cream">
                   02
@@ -318,7 +319,7 @@ export default function Beranda() {
             </div>
 
             {/* Step 3 */}
-            <div className="cara-kerja-card group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+            <div className="cara-kerja-card reveal-stagger-3 group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-cream">
                   03
@@ -351,7 +352,7 @@ export default function Beranda() {
             </div>
 
             {/* Step 4 */}
-            <div className="cara-kerja-card group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+            <div className="cara-kerja-card reveal-stagger-4 group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-cream">
                   04
@@ -431,7 +432,7 @@ export default function Beranda() {
       </section>
 
       {/* ─── Angka Dampak ─── */}
-      <section className="angka-dampak-section relative overflow-hidden">
+      <section className="angka-dampak-section relative overflow-hidden reveal-up">
         {/* Full background image */}
         <div
           className="absolute inset-0 z-0"
@@ -460,74 +461,63 @@ export default function Beranda() {
             </p>
           </div>
 
-          {/* 4 Stats Cards */}
+          {/* 4 Stats Cards with Animated Counters */}
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {/* Stat 1 */}
-            <div className="angka-card flex flex-col items-center rounded-2xl bg-white/70 p-8 text-center shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
-              {/* Icon circle */}
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-maroon/10 text-maroon">
+            {/* Stat 1 - Liter Minyak */}
+            <StatCard
+              icon={
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M17 8C8 10 5.9 16.17 3.82 21.34L4.59 22l6.5-4.5C14 19.5 18 18 21 15c4.09-4.09 3.31-10.83 0-12-1.14.42-2.5 1.2-3.5 2.5L17 8z" />
                   <path d="M2 12s4-2 8 2" />
                 </svg>
-              </div>
-              <p className="font-display text-4xl font-bold text-maroon sm:text-5xl">
-                1.250+
-              </p>
-              <p className="mt-2 font-display text-base font-bold text-ink">
-                Liter Minyak Jelantah
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-ink/60">
-                Berhasil dikumpulkan melalui bank sampah mitra.
-              </p>
-              <span className="mt-4 h-[3px] w-8 rounded-full bg-maroon" />
-            </div>
+              }
+              value={1250}
+              label="Liter Minyak Jelantah"
+              description="Berhasil dikumpulkan melalui bank sampah mitra."
+              suffix="+"
+              duration={2200}
+              delay={0}
+            />
 
-            {/* Stat 2 */}
-            <div className="angka-card flex flex-col items-center rounded-2xl bg-white/70 p-8 text-center shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-maroon/10 text-maroon">
+            {/* Stat 2 - Orang Berpartisipasi */}
+            <StatCard
+              icon={
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                   <circle cx="9" cy="7" r="4" />
                   <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
                   <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
-              </div>
-              <p className="font-display text-4xl font-bold text-maroon sm:text-5xl">
-                850+
-              </p>
-              <p className="mt-2 font-display text-base font-bold text-ink">
-                Orang Berpartisipasi
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-ink/60">
-                Masyarakat yang telah bergabung dan setia menyetor jelantah.
-              </p>
-              <span className="mt-4 h-[3px] w-8 rounded-full bg-maroon" />
-            </div>
+              }
+              value={850}
+              label="Orang Berpartisipasi"
+              description="Masyarakat yang telah bergabung dan setia menyetor jelantah."
+              suffix="+"
+              duration={2400}
+              delay={0.15}
+            />
 
-            {/* Stat 3 */}
-            <div className="angka-card flex flex-col items-center rounded-2xl bg-white/70 p-8 text-center shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-maroon/10 text-maroon">
+            {/* Stat 3 - CO2 Terkurang */}
+            <StatCard
+              icon={
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
                   <text x="5" y="16" fontSize="10" fill="currentColor" stroke="none" fontWeight="600">CO₂</text>
                 </svg>
-              </div>
-              <p className="font-display text-4xl font-bold text-maroon sm:text-5xl">
-                2,8 Ton
-              </p>
-              <p className="mt-2 font-display text-base font-bold text-ink">
-                Potensi Emisi Terkurang
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-ink/60">
-                Setara dengan mengurangi pencemaran lingkungan.
-              </p>
-              <span className="mt-4 h-[3px] w-8 rounded-full bg-maroon" />
-            </div>
+              }
+              value={2.8}
+              label="Potensi Emisi Terkurang"
+              description="Setara dengan mengurangi pencemaran lingkungan."
+              prefix=""
+              suffix=" Ton"
+              decimals={1}
+              duration={2600}
+              delay={0.3}
+            />
 
-            {/* Stat 4 */}
-            <div className="angka-card flex flex-col items-center rounded-2xl bg-white/70 p-8 text-center shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-maroon/10 text-maroon">
+            {/* Stat 4 - Buket Ditukarkan */}
+            <StatCard
+              icon={
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 12 20 22 4 22 4 12" />
                   <rect x="2" y="7" width="20" height="5" />
@@ -535,18 +525,14 @@ export default function Beranda() {
                   <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
                   <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
                 </svg>
-              </div>
-              <p className="font-display text-4xl font-bold text-maroon sm:text-5xl">
-                400+
-              </p>
-              <p className="mt-2 font-display text-base font-bold text-ink">
-                Buket Telah Ditukarkan
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-ink/60">
-                Menjadi hadiah bermakna dengan kertas batik yang tetap bernilai.
-              </p>
-              <span className="mt-4 h-[3px] w-8 rounded-full bg-maroon" />
-            </div>
+              }
+              value={400}
+              label="Buket Telah Ditukarkan"
+              description="Menjadi hadiah bermakna dengan kertas batik yang tetap bernilai."
+              suffix="+"
+              duration={2800}
+              delay={0.45}
+            />
           </div>
         </div>
       </section>
