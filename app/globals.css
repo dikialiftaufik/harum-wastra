@@ -163,6 +163,31 @@ html {
   outline-offset: 2px;
 }
 
+/* ─── Scrollbar hide utility ─── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Fade up animation for tooltips ─── */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.2s ease-out forwards;
+}
+
 /* ─── Footer Input Styles ─── */
 footer input[type="email"]:focus {
   box-shadow: 0 0 0 2px rgba(245, 239, 230, 0.2);
