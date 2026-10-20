@@ -1,104 +1,11 @@
 import Link from "next/link";
-
-const alasan = [
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="12 2 2 7 12 12 22 7 12 2" />
-        <polyline points="2 17 12 22 22 17" />
-        <polyline points="2 12 12 17 22 12" />
-      </svg>
-    ),
-    judul: "Lilin dari minyak jelantah",
-    isi: "Bahan lilinnya diolah dari minyak goreng bekas hasil setoran warga, bukan minyak baru.",
-  },
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="20 12 20 22 4 22 4 12" />
-        <rect x="2" y="7" width="20" height="5" />
-        <line x1="12" y1="22" x2="12" y2="7" />
-        <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
-        <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
-      </svg>
-    ),
-    judul: "Hadiah yang bisa dicabut",
-    isi: "Penerimanya mencabut lilin untuk dipakai, sedangkan bungkus batik dan tatakannya tetap dipakai ulang, tidak berakhir jadi sampah plastik.",
-  },
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="8" r="7" />
-        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
-      </svg>
-    ),
-    judul: "Kertas batik bermakna",
-    isi: "Enam motif batik dari berbagai daerah dengan asal dan makna masing-masing, sehingga pesan hangat ikut tersampaikan lewat kertasnya.",
-  },
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-        <polyline points="17 6 23 6 23 12" />
-      </svg>
-    ),
-    judul: "Poin untuk langkah baik",
-    isi: "Setiap liter yang Anda setorkan dicatat sebagai poin dan bisa ditukar dengan produk Nusaflo.",
-  },
-];
-
-const langkah = [
-  {
-    no: "01",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
-      </svg>
-    ),
-    judul: "Kumpulkan minyak jelantah",
-    isi: "Simpan minyak goreng bekas di rumah dalam wadah tertutup. Jangan buang ke saluran air.",
-  },
-  {
-    no: "02",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="7" height="7" />
-        <rect x="14" y="3" width="7" height="7" />
-        <rect x="14" y="14" width="7" height="7" />
-        <rect x="3" y="14" width="7" height="7" />
-      </svg>
-    ),
-    judul: "Setor dan pindai QR",
-    isi: "Bawa jelantah ke bank sampah mitra, lalu pindai kode QR pada halaman akun Anda.",
-  },
-  {
-    no: "03",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="12" y1="1" x2="12" y2="23" />
-        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-      </svg>
-    ),
-    judul: "Poin masuk ke akun",
-    isi: "Setiap liter tercatat otomatis dan berubah menjadi poin yang bisa Anda pantau.",
-  },
-  {
-    no: "04",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-      </svg>
-    ),
-    judul: "Tukar atau beli produk",
-    isi: "Gunakan poin untuk buket aromaterapi atau souvenir bunga dari Nusaflo.",
-  },
-];
+import Image from "next/image";
 
 export default function Beranda() {
   return (
     <>
       {/* ─── Hero Section ─── */}
-      <section className="hero-section relative min-h-[90vh] overflow-hidden">
+      <section className="hero-section relative min-h-[92vh] overflow-hidden">
         {/* Background image */}
         <div
           className="absolute inset-0 z-0"
@@ -115,31 +22,36 @@ export default function Beranda() {
           className="absolute inset-0 z-[1]"
           style={{
             background:
-              "linear-gradient(105deg, rgba(245,239,230,0.97) 0%, rgba(245,239,230,0.92) 35%, rgba(245,239,230,0.6) 55%, rgba(245,239,230,0.05) 75%, transparent 100%)",
+              "linear-gradient(105deg, rgba(245,239,230,0.97) 0%, rgba(245,239,230,0.93) 38%, rgba(245,239,230,0.65) 55%, rgba(245,239,230,0.1) 72%, transparent 100%)",
           }}
         />
 
         {/* Content */}
-        <div className="relative z-10 mx-auto flex min-h-[90vh] max-w-7xl items-center px-5 sm:px-8">
-          <div className="max-w-xl py-20 md:py-28">
+        <div className="relative z-10 mx-auto flex min-h-[92vh] max-w-7xl items-center px-5 sm:px-8">
+          <div className="max-w-[580px] py-20 md:py-28">
             {/* Tagline */}
-            <p className="hero-tagline font-mono text-xs font-semibold uppercase tracking-[0.25em] text-maroon">
+            <p className="hero-tagline font-mono text-xs font-semibold uppercase tracking-[0.25em] text-clay">
               Ekonomi Sirkular Untuk Hadiah Bermakna
             </p>
 
             {/* Heading */}
-            <h1 className="mt-6 text-4xl leading-[1.15] text-maroon sm:text-5xl lg:text-[3.4rem]">
-              Setor minyak jelantah, tukar jadi hadiah{" "}
-              <em className="font-display not-italic" style={{ fontStyle: "italic" }}>
-                yang bernilai
-              </em>
+            <h1 className="mt-6 font-display text-[2.6rem] leading-[1.12] text-maroon sm:text-5xl lg:text-[3.5rem]">
+              Setor minyak jelantah,{" "}
+              <br className="hidden sm:block" />
+              tukar jadi hadiah{" "}
+              <br className="hidden sm:block" />
+              yang bernilai
             </h1>
 
             {/* Description */}
-            <p className="mt-6 max-w-md text-base leading-relaxed text-ink/75 sm:text-lg">
-              Kumpulkan poin dari setiap liter minyak goreng bekas yang Anda
-              setorkan, lalu tukarkan dengan buket lilin aromaterapi berbalut
-              kertas batik khas Nusaflo.
+            <p className="mt-7 max-w-[500px] text-[0.95rem] leading-[1.75] text-ink/70 sm:text-base">
+              Minyak jelantah yang Anda setor di bank sampah mitra
+              akan dikonversi menjadi poin. Poin tersebut dapat
+              ditukar dengan buket lilin aromaterapi yang dibungkus
+              kertas batik penuh makna. Lilinnya dapat dicabut,
+              sementara pembungkus dan tatakannya tetap bernilai
+              dan dapat digunakan kembali, sehingga tidak menjadi
+              sampah.
             </p>
 
             {/* CTA Buttons */}
@@ -166,163 +78,475 @@ export default function Beranda() {
               </Link>
               <Link
                 href="/katalog"
-                className="hero-btn-secondary rounded-full border-2 border-maroon/40 px-8 py-4 text-base font-medium text-maroon transition-all duration-300 hover:border-maroon hover:bg-maroon/5"
+                className="hero-btn-secondary rounded-full border-2 border-maroon/30 px-8 py-4 text-base font-medium text-maroon transition-all duration-300 hover:border-maroon hover:bg-maroon/5"
               >
                 Lihat Katalog
               </Link>
+            </div>
+
+            {/* Bottom tagline with line */}
+            <div className="mt-14 flex items-center gap-4">
+              <span className="h-px w-10 bg-clay/40" />
+              <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-clay/70">
+                Dari Dapur Ke Hadiah
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ─── Mengapa Nusaflo ─── */}
-      <section className="bg-cream py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-maroon">
-              Mengapa Nusaflo
+      <section className="mengapa-section relative overflow-hidden">
+        {/* Full background image */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: "url(/backgrounds/bg-beranda-mengapa-nusaflo.png)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+          {/* Section header - centered */}
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.3em] text-maroon">
+              Mengapa Nusaflo?
             </p>
-            <h2 className="mt-4 text-3xl text-maroon sm:text-4xl">
-              Empat nilai di balik setiap buket
+            <h2 className="mt-5 font-display text-[2.4rem] leading-[1.15] text-ink sm:text-5xl lg:text-[3.2rem]">
+              Pilihan sederhana,
+              <br />
+              <span className="text-maroon">dampak yang lebih luas</span>
             </h2>
-            <p className="mt-5 text-ink/70">
-              Kami merancang setiap buket supaya setelah hadiahnya dipakai,
-              tidak ada bagian yang berakhir jadi sampah.
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-ink/70">
+              Nusaflo hadir untuk menghubungkan niat baik Anda di dapur
+              dengan hadiah yang bermakna, sekaligus lingkungan yang lebih bersih.
             </p>
           </div>
 
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {alasan.map((a) => (
-              <div
-                key={a.judul}
-                className="rounded-2xl border border-ink/8 bg-white p-7 transition-all duration-300 hover:border-maroon/20 hover:shadow-lg hover:shadow-maroon/5"
-              >
-                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-maroon/10 text-maroon">
-                  {a.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-ink">{a.judul}</h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-ink/65">
-                  {a.isi}
-                </p>
+          {/* 4 cards with graphic icons */}
+          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Card 1 - Mulai dari dapur Anda */}
+            <div className="mengapa-card flex flex-col items-center text-center">
+              <div className="mb-4 h-44 w-44">
+                <Image
+                  src="/graphics/house.png"
+                  alt="Mulai dari dapur Anda"
+                  width={176}
+                  height={176}
+                  className="h-full w-full object-contain"
+                />
               </div>
-            ))}
+              <h3 className="font-display text-xl font-bold text-ink">
+                Mulai dari dapur<br />Anda
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink/65">
+                Minyak jelantah yang biasanya dibuang, kini bisa dikumpulkan
+                dan disetor ke bank sampah mitra.
+              </p>
+              <span className="mt-5 h-[3px] w-8 rounded-full bg-maroon" />
+            </div>
+
+            {/* Card 2 - Dikonversi menjadi poin */}
+            <div className="mengapa-card flex flex-col items-center text-center">
+              <div className="mb-4 h-44 w-44">
+                <Image
+                  src="/graphics/points.png"
+                  alt="Dikonversi menjadi poin"
+                  width={176}
+                  height={176}
+                  className="h-full w-full object-contain"
+                />
+              </div>
+              <h3 className="font-display text-xl font-bold text-ink">
+                Dikonversi<br />menjadi poin
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink/65">
+                Setiap liter jelantah yang Anda setor akan tercatat dan
+                dikonversi menjadi poin yang dapat digunakan.
+              </p>
+              <span className="mt-5 h-[3px] w-8 rounded-full bg-maroon" />
+            </div>
+
+            {/* Card 3 - Ditukar dengan hadiah bermakna */}
+            <div className="mengapa-card flex flex-col items-center text-center">
+              <div className="mb-4 h-44 w-44">
+                <Image
+                  src="/graphics/gift.png"
+                  alt="Ditukar dengan hadiah bermakna"
+                  width={176}
+                  height={176}
+                  className="h-full w-full object-contain"
+                />
+              </div>
+              <h3 className="font-display text-xl font-bold text-ink">
+                Ditukar dengan<br />hadiah bermakna
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink/65">
+                Poin dapat ditukarkan dengan buket bunga lilin aromaterapi
+                dengan kertas batik dan tatakan yang tetap bernilai.
+              </p>
+              <span className="mt-5 h-[3px] w-8 rounded-full bg-maroon" />
+            </div>
+
+            {/* Card 4 - Bersama menjaga lingkungan */}
+            <div className="mengapa-card flex flex-col items-center text-center">
+              <div className="mb-4 h-44 w-44">
+                <Image
+                  src="/graphics/earth.png"
+                  alt="Bersama menjaga lingkungan"
+                  width={176}
+                  height={176}
+                  className="h-full w-full object-contain"
+                />
+              </div>
+              <h3 className="font-display text-xl font-bold text-ink">
+                Bersama menjaga<br />lingkungan
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink/65">
+                Mengurangi pencemaran minyak jelantah dan mendorong ekonomi
+                sirkular untuk masa depan yang lebih baik.
+              </p>
+              <span className="mt-5 h-[3px] w-8 rounded-full bg-maroon" />
+            </div>
           </div>
         </div>
       </section>
 
       {/* ─── Cara Kerja (4 Langkah) ─── */}
-      <section className="relative bg-white py-20 md:py-28">
-        {/* Decorative top border */}
+      <section className="cara-kerja-section relative overflow-hidden">
+        {/* Full background image */}
         <div
-          className="absolute left-0 right-0 top-0 h-1"
+          className="absolute inset-0 z-0"
           style={{
-            background: "linear-gradient(90deg, transparent, var(--color-maroon), transparent)",
-            opacity: 0.15,
+            backgroundImage: "url(/backgrounds/bg-beranda-cara-kerja.png)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
           }}
-          aria-hidden="true"
         />
 
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-maroon">
-              Cara kerja
-            </p>
-            <h2 className="mt-4 text-3xl text-maroon sm:text-4xl">
-              Empat langkah dari dapur ke buket
+        <div className="relative z-10 mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+          {/* Section header - left aligned */}
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-4">
+              <p className="font-mono text-xs font-semibold uppercase tracking-[0.3em] text-clay">
+                Cara Kerja
+              </p>
+              <span className="h-px w-12 bg-maroon/30" />
+            </div>
+            <h2 className="mt-4 font-display text-[2.4rem] leading-[1.12] text-ink sm:text-5xl lg:text-[3.2rem]">
+              <span className="text-maroon">Empat langkah</span>{" "}
+              dari dapur ke buket
             </h2>
-            <p className="mt-5 text-ink/70">
-              Seluruh proses bisa Anda ikuti sendiri, dari minyak bekas di dapur
-              sampai buket yang siap diberikan.
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-ink/70">
+              Minyak jelantah yang Anda setor di bank sampah mitra akan dikonversi menjadi poin.
+              Poin tersebut dapat ditukar dengan buket lilin aromaterapi yang dibungkus kertas batik
+              penuh makna, sehingga tidak hanya mengurangi sampah, tetap juga menjadi hadiah bernilai.
             </p>
           </div>
 
-          <ol className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {langkah.map((l) => (
-              <li
-                key={l.no}
-                className="group relative overflow-hidden rounded-2xl border border-ink/8 bg-cream/50 p-7 transition-all duration-300 hover:border-maroon/20 hover:shadow-lg hover:shadow-maroon/5"
-              >
-                {/* Step number watermark */}
-                <span
-                  className="absolute -right-2 -top-4 font-display text-[5rem] font-bold leading-none text-maroon/[0.06] transition-colors duration-300 group-hover:text-maroon/[0.1]"
-                  aria-hidden="true"
-                >
-                  {l.no}
+          {/* 4 Step Cards */}
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Step 1 */}
+            <div className="cara-kerja-card group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+              {/* Image */}
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-cream">
+                  01
                 </span>
-
-                {/* Icon */}
-                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-maroon/10 text-maroon transition-colors duration-300 group-hover:bg-maroon group-hover:text-cream">
-                  {l.icon}
+                <Image
+                  src="/graphics/cara-kerja-1.png"
+                  alt="Kumpulkan minyak jelantah"
+                  width={400}
+                  height={300}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              {/* Text */}
+              <div className="p-5">
+                <div className="mb-3 flex items-start gap-3">
+                  {/* Bottle icon */}
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-maroon/10 text-maroon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M10 2h4v4l2 2v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8l2-2V2z" />
+                    </svg>
+                  </div>
+                  <h3 className="font-display text-lg font-bold leading-snug text-maroon">
+                    Kumpulkan<br />minyak jelantah
+                  </h3>
                 </div>
-
-                <h3 className="text-lg font-semibold text-ink">{l.judul}</h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-ink/65">
-                  {l.isi}
+                <p className="text-sm leading-relaxed text-ink/65">
+                  Simpan minyak goreng bekas di wadah tertutup di rumah sampai siap disetor.
                 </p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+              </div>
+            </div>
 
-      {/* ─── Pita Batik Pemisah ─── */}
-      <div className="h-16 bg-cream" aria-hidden="true">
-        <div
-          className="h-full opacity-20"
-          style={{
-            backgroundImage: "url(/motif/sekar-jagad.png)",
-            backgroundSize: "112px",
-            backgroundRepeat: "repeat",
-          }}
-        />
-      </div>
+            {/* Step 2 */}
+            <div className="cara-kerja-card group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-cream">
+                  02
+                </span>
+                <Image
+                  src="/graphics/cara-kerja-2.png"
+                  alt="Setor dan pindai QR"
+                  width={400}
+                  height={300}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-5">
+                <div className="mb-3 flex items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-maroon/10 text-maroon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="3" width="7" height="7" />
+                      <rect x="14" y="3" width="7" height="7" />
+                      <rect x="14" y="14" width="7" height="7" />
+                      <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                  </div>
+                  <h3 className="font-display text-lg font-bold leading-snug text-maroon">
+                    Setor dan<br />pindai QR
+                  </h3>
+                </div>
+                <p className="text-sm leading-relaxed text-ink/65">
+                  Datangi bank sampah mitra, serahkan jelantah, lalu pindai QR untuk mencatat setoran.
+                </p>
+              </div>
+            </div>
 
-      {/* ─── Angka Dampak ─── */}
-      <section className="relative overflow-hidden bg-maroon-dark text-cream">
-        {/* Decorative batik background */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: "url(/motif/kawung.png)",
-            backgroundSize: "80px",
-            backgroundRepeat: "repeat",
-          }}
-          aria-hidden="true"
-        />
+            {/* Step 3 */}
+            <div className="cara-kerja-card group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-cream">
+                  03
+                </span>
+                <Image
+                  src="/graphics/cara-kerja-3.png"
+                  alt="Poin masuk ke akun"
+                  width={400}
+                  height={300}
+                  className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-5">
+                <div className="mb-3 flex items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-maroon/10 text-maroon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <ellipse cx="12" cy="5" rx="9" ry="3" />
+                      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                    </svg>
+                  </div>
+                  <h3 className="font-display text-lg font-bold leading-snug text-maroon">
+                    Poin masuk<br />ke akun
+                  </h3>
+                </div>
+                <p className="text-sm leading-relaxed text-ink/65">
+                  Setiap liter yang tercatat akan menambah Eco Points ke akun Anda secara ilustratif.
+                </p>
+              </div>
+            </div>
 
-        <div className="relative mx-auto max-w-4xl px-5 py-20 text-center sm:px-8 md:py-24">
-          <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-cream/60">
-            Dampak Nyata
-          </p>
-          <p className="mt-6 font-display text-4xl sm:text-5xl lg:text-6xl">
-            3,24 juta kiloliter
-          </p>
-          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-cream/75">
-            Perkiraan volume minyak goreng bekas yang dihasilkan Indonesia
-            setiap tahun. Nusaflo hadir untuk mengubah sebagian darinya menjadi
-            nilai, bukan limbah. Angka ini masih berupa perkiraan dan menunggu
-            validasi lapangan.
-          </p>
-          <div className="mt-10 flex justify-center">
+            {/* Step 4 */}
+            <div className="cara-kerja-card group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-cream">
+                  04
+                </span>
+                <Image
+                  src="/graphics/cara-kerja-4.png"
+                  alt="Tukar atau beli produk"
+                  width={400}
+                  height={300}
+                  className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-5">
+                <div className="mb-3 flex items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-maroon/10 text-maroon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 12 20 22 4 22 4 12" />
+                      <rect x="2" y="7" width="20" height="5" />
+                      <line x1="12" y1="22" x2="12" y2="7" />
+                      <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                      <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                    </svg>
+                  </div>
+                  <h3 className="font-display text-lg font-bold leading-snug text-maroon">
+                    Tukar atau<br />beli produk
+                  </h3>
+                </div>
+                <p className="text-sm leading-relaxed text-ink/65">
+                  Gunakan poin untuk menukar hadiah Nusaflo. Lilinnya dapat dicabut, sementara pembungkus batik dan tatakannya tetap bernilai dan bisa digunakan kembali.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA Button - centered */}
+          <div className="mt-14 flex justify-center">
             <Link
               href="/setor"
-              className="inline-flex items-center gap-2 rounded-full border border-cream/30 px-8 py-3.5 text-sm font-medium text-cream transition-all duration-300 hover:border-cream hover:bg-cream/10"
+              className="group inline-flex items-center gap-2.5 rounded-full bg-maroon px-10 py-4 text-base font-medium text-cream transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20"
             >
-              Mulai Berkontribusi
+              Mulai Setor
               <svg
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                className="transition-transform duration-300 group-hover:translate-x-1"
               >
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </Link>
+          </div>
+
+          {/* Bottom tagline with lines */}
+          <div className="mt-10 flex items-center justify-center gap-4">
+            <span className="h-px w-10 bg-clay/40" />
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-clay/70">
+              Dari Dapur Ke Hadiah
+            </p>
+            <span className="h-px w-10 bg-clay/40" />
+          </div>
+
+          {/* Scroll down indicator */}
+          <div className="mt-8 flex justify-center">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/15 bg-white/60 text-ink/40 transition-colors hover:border-maroon/30 hover:text-maroon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Angka Dampak ─── */}
+      <section className="angka-dampak-section relative overflow-hidden">
+        {/* Full background image */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: "url(/backgrounds/bg-beranda-angka-dampak.png)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+          {/* Section header - centered */}
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.3em] text-maroon">
+              Angka Dampak
+            </p>
+            <h2 className="mt-5 font-display text-[2.4rem] leading-[1.12] text-ink sm:text-5xl lg:text-[3.2rem]">
+              <span className="text-maroon">Dampak nyata</span>
+              <br />
+              dari langkah sederhana Anda
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-ink/70">
+              Setiap liter minyak jelantah yang disetor tidak hanya menjadi poin,
+              tetapi juga membantu lingkungan yang lebih bersih dan masa depan yang lebih baik.
+            </p>
+          </div>
+
+          {/* 4 Stats Cards */}
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Stat 1 */}
+            <div className="angka-card flex flex-col items-center rounded-2xl bg-white/70 p-8 text-center shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+              {/* Icon circle */}
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-maroon/10 text-maroon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M17 8C8 10 5.9 16.17 3.82 21.34L4.59 22l6.5-4.5C14 19.5 18 18 21 15c4.09-4.09 3.31-10.83 0-12-1.14.42-2.5 1.2-3.5 2.5L17 8z" />
+                  <path d="M2 12s4-2 8 2" />
+                </svg>
+              </div>
+              <p className="font-display text-4xl font-bold text-maroon sm:text-5xl">
+                1.250+
+              </p>
+              <p className="mt-2 font-display text-base font-bold text-ink">
+                Liter Minyak Jelantah
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-ink/60">
+                Berhasil dikumpulkan melalui bank sampah mitra.
+              </p>
+              <span className="mt-4 h-[3px] w-8 rounded-full bg-maroon" />
+            </div>
+
+            {/* Stat 2 */}
+            <div className="angka-card flex flex-col items-center rounded-2xl bg-white/70 p-8 text-center shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-maroon/10 text-maroon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </div>
+              <p className="font-display text-4xl font-bold text-maroon sm:text-5xl">
+                850+
+              </p>
+              <p className="mt-2 font-display text-base font-bold text-ink">
+                Orang Berpartisipasi
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-ink/60">
+                Masyarakat yang telah bergabung dan setia menyetor jelantah.
+              </p>
+              <span className="mt-4 h-[3px] w-8 rounded-full bg-maroon" />
+            </div>
+
+            {/* Stat 3 */}
+            <div className="angka-card flex flex-col items-center rounded-2xl bg-white/70 p-8 text-center shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-maroon/10 text-maroon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <text x="5" y="16" fontSize="10" fill="currentColor" stroke="none" fontWeight="600">CO₂</text>
+                </svg>
+              </div>
+              <p className="font-display text-4xl font-bold text-maroon sm:text-5xl">
+                2,8 Ton
+              </p>
+              <p className="mt-2 font-display text-base font-bold text-ink">
+                Potensi Emisi Terkurang
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-ink/60">
+                Setara dengan mengurangi pencemaran lingkungan.
+              </p>
+              <span className="mt-4 h-[3px] w-8 rounded-full bg-maroon" />
+            </div>
+
+            {/* Stat 4 */}
+            <div className="angka-card flex flex-col items-center rounded-2xl bg-white/70 p-8 text-center shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-maroon/10 text-maroon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 12 20 22 4 22 4 12" />
+                  <rect x="2" y="7" width="20" height="5" />
+                  <line x1="12" y1="22" x2="12" y2="7" />
+                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                </svg>
+              </div>
+              <p className="font-display text-4xl font-bold text-maroon sm:text-5xl">
+                400+
+              </p>
+              <p className="mt-2 font-display text-base font-bold text-ink">
+                Buket Telah Ditukarkan
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-ink/60">
+                Menjadi hadiah bermakna dengan kertas batik yang tetap bernilai.
+              </p>
+              <span className="mt-4 h-[3px] w-8 rounded-full bg-maroon" />
+            </div>
           </div>
         </div>
       </section>

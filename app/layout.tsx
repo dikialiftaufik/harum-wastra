@@ -24,6 +24,10 @@ export const metadata: Metadata = {
   title: "Nusaflo | Buket Bunga Lilin dari Minyak Jelantah",
   description:
     "Buket bunga lilin aromaterapi dari minyak jelantah bekas, dengan kertas pembungkus batik pilihan. Setor jelantah, kumpulkan poin, tukar produk.",
+  icons: {
+    icon: "/logo-nusaflo-web.png",
+    apple: "/logo-nusaflo-web.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
