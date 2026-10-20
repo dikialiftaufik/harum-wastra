@@ -124,6 +124,24 @@ export default function Keranjang() {
     setSiap(true);
   }, []);
 
+  /* IntersectionObserver untuk reveal kartu checkout (render ulang saat ganti step) */
+  useEffect(() => {
+    const elems = document.querySelectorAll(".reveal-on-scroll");
+    if (!elems.length) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    elems.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, [siap, step]);
+
   const subtotal = totalKeranjang(items);
   const ongkirVal = PENGIRIMAN.find((p) => p.id === pengiriman)?.harga ?? 0;
   const total = subtotal + ongkirVal + BIAYA_LAYANAN;
@@ -211,13 +229,9 @@ export default function Keranjang() {
 
   /* ── Checkout Page ── */
   return (
-    <section className="checkout-page min-h-screen pb-20 reveal-up" style={{ backgroundImage: "url(/backgrounds/bg-tukar-poin.png)", backgroundSize: "cover", backgroundPosition: "top center" }}>
-      {/* Background overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-cream/98 via-cream/95 to-cream/80" />
-      <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url(/motif/kawung.png)", backgroundSize: "100px", backgroundRepeat: "repeat" }} aria-hidden="true" />
-
+    <section className="checkout-page relative min-h-screen bg-cream pb-20 reveal-up">
       {/* ━━ Header ━━ */}
-      <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8 lg:px-16 pt-20 pb-12">
+      <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8 lg:px-16 pt-28 sm:pt-32 pb-12">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
           {/* Title */}
           <div className="checkout-header-text reveal-stagger-1">
@@ -235,36 +249,39 @@ export default function Keranjang() {
           </div>
 
           {/* ━━ Stepper ━━ */}
-          <div className="flex-shrink-0 w-full lg:w-[340px] reveal-stagger-2 checkout-stepper-anim">
+          <div className="w-full flex-shrink-0 lg:w-[360px] reveal-stagger-2">
             <div className="relative">
-              {/* Connecting line */}
-              <div className="absolute top-4 left-10 right-10 h-[2px] bg-ink/15 -z-10" />
-              <div className="absolute top-4 left-10 right-10 h-[2px] bg-maroon -z-10" style={{ width: `${step === 1 ? 0 : step === 2 ? '50%' : '100%'}` }} />
+              {/* Rail: spans from first circle centre to last circle centre */}
+              <div className="absolute left-[16.6667%] right-[16.6667%] top-4 h-[2px] -translate-y-1/2 bg-ink/15" />
+              <div
+                className="absolute left-[16.6667%] top-4 h-[2px] -translate-y-1/2 bg-maroon transition-all duration-500"
+                style={{ width: step === 2 ? "33.3333%" : "0%" }}
+              />
 
-              <div className="flex items-start justify-between">
-                {/* Step 1 */}
-                <div className="flex flex-col items-center">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${step >= 1 ? "bg-maroon text-cream shadow-[0_0_0_4px_rgba(123,33,46,0.15)]" : "bg-ink/20 text-ink/30"}`}>
-                    {step > 1 ? <IconCheck /> : "1"}
-                  </div>
-                  <span className="mt-2 text-xs font-medium text-center max-w-[70px] text-ink/60">Informasi</span>
-                </div>
-
-                {/* Step 2 */}
-                <div className="flex flex-col items-center">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${step >= 2 ? "bg-maroon text-cream shadow-[0_0_0_4px_rgba(123,33,46,0.15)]" : "bg-ink/20 text-ink/30"}`}>
-                    {step > 2 ? <IconCheck /> : "2"}
-                  </div>
-                  <span className="mt-2 text-xs font-medium text-center max-w-[70px] text-ink/60">Pembayaran</span>
-                </div>
-
-                {/* Step 3 */}
-                <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-ink/20 text-ink/30">
-                    3
-                  </div>
-                  <span className="mt-2 text-xs font-medium text-center max-w-[70px] text-ink/40">Selesai</span>
-                </div>
+              <div className="grid grid-cols-3">
+                {["Informasi", "Pembayaran", "Selesai"].map((label, i) => {
+                  const nomor = i + 1;
+                  return (
+                    <div key={label} className="flex flex-col items-center">
+                      <div
+                        className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 text-xs font-bold transition-colors duration-300 ${
+                          step >= nomor
+                            ? "border-maroon bg-maroon text-cream"
+                            : "border-ink/20 bg-cream text-ink/40"
+                        }`}
+                      >
+                        {step > nomor ? <IconCheck /> : nomor}
+                      </div>
+                      <span
+                        className={`mt-2 text-xs ${
+                          step === nomor ? "font-semibold text-maroon" : "text-ink/50"
+                        }`}
+                      >
+                        {label}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -280,7 +297,7 @@ export default function Keranjang() {
             {step === 1 ? (
               <>
                 {/* ── 1. Alamat Pengiriman ── */}
-                <div className="reveal-on-scroll reveal-stagger-3 rounded-2xl bg-white/80 p-6 md:p-8 shadow-sm checkout-card backdrop-blur-sm border border-ink/5">
+                <div className="reveal-on-scroll reveal-stagger-3 rounded-2xl border border-ink/5 bg-white p-6 shadow-sm md:p-8 checkout-card">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
                       <span className="text-maroon p-2 bg-maroon/10 rounded-lg"><IconPin /></span>
@@ -319,10 +336,9 @@ export default function Keranjang() {
                     </div>
                     <IconChevronRight className="text-ink/25 group-hover:text-ink/50 transition-colors" />
                   </div>
-                </div>
+                  <div className="my-6 border-t border-ink/10" />
 
-                {/* ── 2. Metode Pengiriman ── */}
-                <div className="reveal-on-scroll reveal-stagger-4 rounded-2xl bg-white/80 p-6 md:p-8 shadow-sm checkout-card backdrop-blur-sm border border-ink/5">
+                  {/* ── 2. Metode Pengiriman ── */}
                   <div className="flex items-center gap-2 mb-6">
                     <span className="text-maroon p-2 bg-maroon/10 rounded-lg"><IconTruck /></span>
                     <h2 className="text-lg font-semibold text-ink">2. Metode Pengiriman</h2>
@@ -352,85 +368,11 @@ export default function Keranjang() {
                   </div>
                 </div>
 
-                {/* ── 3. Ringkasan Produk ── */}
-                <div className="reveal-on-scroll reveal-stagger-5 rounded-2xl bg-white/80 p-6 md:p-8 shadow-sm checkout-card backdrop-blur-sm border border-ink/5">
-                  <div className="flex items-center gap-2 mb-6">
-                    <span className="text-maroon p-2 bg-maroon/10 rounded-lg"><IconCart /></span>
-                    <h2 className="text-lg font-semibold text-ink">3. Ringkasan Produk</h2>
-                  </div>
-                  <div className="space-y-3">
-                    {items.map((it, idx) => (
-                      <div
-                        key={it.key}
-                        className={`flex gap-3 py-3 ${idx < items.length - 1 ? "border-b border-ink/5" : ""}`}
-                      >
-                        <div className="w-16 h-16 rounded-xl overflow-hidden bg-cream flex-shrink-0 relative">
-                          <div
-                            className="absolute inset-0"
-                            style={{
-                              backgroundImage: `url(${it.pita})`,
-                              backgroundSize: "40px",
-                              backgroundRepeat: "repeat",
-                            }}
-                            aria-hidden="true"
-                          />
-                          <Image src={it.gambar} alt={it.nama} fill className="object-cover mt-1" sizes="64px" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex justify-between items-start">
-                            <div>
-                              <p className="font-semibold text-sm text-ink truncate">{it.nama}</p>
-                              <p className="text-xs text-ink/50">Motif: {it.motifNama}</p>
-                            </div>
-                            <button
-                              onClick={() => handleHapus(it.key)}
-                              className="text-ink/25 hover:text-maroon transition-colors p-1"
-                              title="Hapus"
-                            >
-                              <IconTrash />
-                            </button>
-                          </div>
-                          <div className="flex items-end justify-between mt-1">
-                            <p className="text-sm font-semibold text-maroon">{formatRupiah(it.harga)}</p>
-                            <div className="flex items-center border border-ink/15 rounded-lg overflow-hidden">
-                              <button
-                                onClick={() => handleQty(it.key, -1)}
-                                className="w-8 h-8 flex items-center justify-center text-ink/50 hover:bg-ink/5 transition-colors text-sm"
-                              >
-                                −
-                              </button>
-                              <span className="w-8 h-8 flex items-center justify-center text-sm font-medium text-ink border-x border-ink/15">
-                                {it.qty}
-                              </span>
-                              <button
-                                onClick={() => handleQty(it.key, 1)}
-                                className="w-8 h-8 flex items-center justify-center text-ink/50 hover:bg-ink/5 transition-colors text-sm"
-                              >
-                                +
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* CTA to step 2 */}
-                <div className="reveal-on-scroll reveal-stagger-6">
-                  <button
-                    onClick={goToPayment}
-                    className="w-full rounded-full bg-maroon px-8 py-4 text-cream font-medium text-base transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20 flex items-center justify-center gap-2 checkout-cta"
-                  >
-                    Lanjut ke Pembayaran
-                    <IconChevronRight />
-                  </button>
-                </div>
               </>
             ) : (
               <>
                 {/* ── Metode Pembayaran ── */}
-                <div className="reveal-on-scroll reveal-stagger-3 rounded-2xl bg-white/80 p-6 md:p-8 shadow-sm checkout-card backdrop-blur-sm border border-ink/5">
+                <div className="reveal-on-scroll reveal-stagger-3 rounded-2xl border border-ink/5 bg-white p-6 shadow-sm md:p-8 checkout-card">
                   <div className="flex items-center gap-2 mb-6">
                     <span className="text-maroon p-2 bg-maroon/10 rounded-lg"><IconCreditCard /></span>
                     <h2 className="text-lg font-semibold text-ink">Metode Pembayaran</h2>
@@ -474,7 +416,7 @@ export default function Keranjang() {
                           >
                             <div className="flex items-center justify-center gap-1.5 mb-1">
                               <div className={radioSmall(bank === b.id)} />
-                              <img src={b.logo} alt={b.label} className="h-8 w-auto object-contain" loading="lazy" />
+                              <Image src={b.logo} alt={b.label} width={80} height={40} className="h-8 w-auto object-contain" />
                             </div>
                             <input type="radio" name="bank" value={b.id} checked={bank === b.id} onChange={() => setBank(b.id)} className="sr-only" />
                             <span className="text-xs text-ink/60">{b.label}</span>
@@ -486,7 +428,7 @@ export default function Keranjang() {
                 </div>
 
                 {/* ── Instruksi Pembayaran ── */}
-                <div className="reveal-on-scroll reveal-stagger-4 rounded-2xl bg-white/80 p-6 md:p-8 shadow-sm checkout-card backdrop-blur-sm border border-ink/5">
+                <div className="reveal-on-scroll reveal-stagger-4 rounded-2xl border border-ink/5 bg-white p-6 shadow-sm md:p-8 checkout-card">
                   <div className="flex items-center justify-between mb-6">
                     <h3 className="font-semibold text-ink">Instruksi Pembayaran</h3>
                     <div className="flex items-center gap-1.5 text-ink/50">
@@ -555,7 +497,7 @@ export default function Keranjang() {
           <div>
             <div className="sticky top-28 space-y-5">
               {/* Summary card */}
-              <div className="reveal-on-scroll reveal-stagger-3 rounded-2xl bg-white/80 p-6 shadow-sm checkout-card backdrop-blur-sm border border-ink/5">
+              <div className="reveal-on-scroll reveal-stagger-3 rounded-2xl border border-ink/5 bg-white p-6 shadow-sm checkout-card">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-5">
                   <div className="flex items-center gap-2">
@@ -647,7 +589,7 @@ export default function Keranjang() {
                 {/* Total */}
                 <div className="flex justify-between items-baseline border-t border-ink/10 pt-4 mt-4">
                   <span className="font-semibold text-ink">Total Pembayaran</span>
-                  <span className="text-xl font-bold text-maroon font-mono">{formatRupiah(total)}</span>
+                  <span className="font-mono text-2xl font-bold text-maroon sm:text-3xl">{formatRupiah(total)}</span>
                 </div>
               </div>
 
