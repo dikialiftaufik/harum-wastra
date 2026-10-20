@@ -1,9 +1,12 @@
 import Link from "next/link";
 
+import { Suspense } from "react";
+import { Tahun } from "./Tahun";
+
 export function Footer() {
   return (
     <footer className="relative overflow-hidden">
-      {/* Background */}
+      {/* Background image */}
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -14,7 +17,18 @@ export function Footer() {
         }}
       />
 
-      <div className="relative z-10 bg-maroon-dark/95 text-cream">
+      {/* Batik pattern overlay */}
+      <div
+        className="absolute inset-0 z-0 opacity-15"
+        style={{
+          backgroundImage: "url(/motif/kawung.png)",
+          backgroundSize: "80px",
+          backgroundRepeat: "repeat",
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 bg-maroon-dark/20 text-cream backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
           <div className="grid gap-12 md:grid-cols-12">
             {/* Col 1 - Logo and description */}
@@ -178,7 +192,7 @@ export function Footer() {
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                     <circle cx="12" cy="10" r="3" />
                   </svg>
-                  <span>Nusaflo Creative Space,<br />Jakarta Selatan</span>
+                  <span>Nusaflo Creative Space,<br />Bandung</span>
                 </li>
               </ul>
 
@@ -217,15 +231,19 @@ export function Footer() {
 
           {/* Bottom bar */}
           <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-cream/15 pt-6 sm:flex-row">
-            <div className="flex items-center gap-3">
-              {/* Small leaf icon */}
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-cream/50">
-                <path d="M17 8C8 10 5.9 16.17 3.82 21.34L4.59 22l6.5-4.5C14 19.5 18 18 21 15c4.09-4.09 3.31-10.83 0-12-1.14.42-2.5 1.2-3.5 2.5L17 8z" />
-              </svg>
-              <p className="text-xs text-cream/55">
-                © 2025 Nusaflo. Semua hak dilindungi.
-              </p>
-            </div>
+            <p className="text-xs text-cream/55">
+              <Suspense
+                fallback={
+                  <p className="text-xs text-cream/55">
+                    © Nusaflo. Semua hak dilindungi.
+                  </p>
+                }
+              >
+                <p className="text-xs text-cream/55">
+                  © <Tahun /> Nusaflo. Semua hak dilindungi.
+                </p>
+              </Suspense>
+            </p>
             <div className="flex items-center gap-6">
               <span className="hidden h-5 w-px bg-cream/20 sm:block" />
               <Link href="#" className="text-xs text-cream/55 transition-colors hover:text-cream">
