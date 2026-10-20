@@ -8,7 +8,7 @@ export function Footer() {
         <div
           className="h-full opacity-25"
           style={{
-            backgroundImage: "url(/gambar/motif-sekar-jagad.svg)",
+            backgroundImage: "url(/motif/sekar-jagad.png)",
             backgroundSize: "112px",
             backgroundRepeat: "repeat",
           }}
