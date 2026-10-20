@@ -46,8 +46,10 @@ export default function Agenda() {
   return (
     <>
       {/* ─── Hero Section ─── */}
-      <section className="eco-events-hero relative overflow-hidden bg-cream pt-24 pb-16 md:pt-28 md:pb-20">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
+      <section className="eco-events-hero relative overflow-hidden pt-24 pb-16 md:pt-28 md:pb-20" style={{ backgroundImage: "url(/backgrounds/bg-eco-points-and-events.png)", backgroundSize: "cover", backgroundPosition: "center" }}>
+        <div className="absolute inset-0 bg-gradient-to-b from-cream/95 via-cream/90 to-cream/60" />
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "url(/motif/sekar-jagad.png)", backgroundSize: "120px", backgroundRepeat: "repeat" }} aria-hidden="true" />
+        <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
             {/* Left: Text Content */}
             <div className="eco-events-hero-text relative z-10">
@@ -86,8 +88,9 @@ export default function Agenda() {
       </section>
 
       {/* ─── Event Listing Section ─── */}
-      <section className="eco-events-listing bg-cream pb-16 md:pb-24">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
+      <section className="eco-events-listing relative pb-16 md:pb-24" style={{ backgroundImage: "url(/backgrounds/bg-eco-points-and-events.png)", backgroundSize: "cover", backgroundPosition: "top center" }}>
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url(/motif/kawung.png)", backgroundSize: "100px", backgroundRepeat: "repeat" }} aria-hidden="true" />
+        <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
           {/* Section Header with Filter */}
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -351,8 +354,10 @@ function EventRegistration({
   return (
     <>
       {/* ─── Hero Banner ─── */}
-      <section className="eco-events-hero relative overflow-hidden bg-cream pt-24 pb-10 md:pt-28 md:pb-14">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
+      <section className="eco-events-hero relative overflow-hidden pt-24 pb-10 md:pt-28 md:pb-14" style={{ backgroundImage: "url(/backgrounds/bg-eco-points-and-events.png)", backgroundSize: "cover", backgroundPosition: "center" }}>
+        <div className="absolute inset-0 bg-gradient-to-b from-cream/95 via-cream/90 to-cream/60" />
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "url(/motif/truntum.png)", backgroundSize: "100px", backgroundRepeat: "repeat" }} aria-hidden="true" />
+        <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
           <p className="eco-events-label font-mono text-xs font-semibold uppercase tracking-[0.25em] text-ink/60">
             PENDAFTARAN ACARA
           </p>
@@ -370,8 +375,9 @@ function EventRegistration({
       </section>
 
       {/* ─── Form + Event Detail ─── */}
-      <section className="bg-cream pb-16 md:pb-24">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
+      <section className="relative pb-16 md:pb-24" style={{ backgroundImage: "url(/backgrounds/bg-eco-points-and-events.png)", backgroundSize: "cover", backgroundPosition: "top center" }}>
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url(/motif/kawung.png)", backgroundSize: "100px", backgroundRepeat: "repeat" }} aria-hidden="true" />
+        <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
             {/* Left: Registration Form */}
             <div className="lg:col-span-7">
