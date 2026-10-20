@@ -731,7 +731,7 @@ export default function EcoPoints() {
       {/* ═══════════════════════════════════════════════
           SECTION 2: Riwayat Setoran & Tukar Voucher
          ═══════════════════════════════════════════════ */}
-      <section className="eco-points-scroll relative overflow-hidden pb-8 bg-cream">
+      <section className="eco-points-scroll relative overflow-hidden pb-8" style={{ backgroundColor: "#F9EFE1" }}>
         <div className="relative z-10 mx-auto max-w-7xl px-5 pt-8 sm:px-8">
           <div className="grid gap-8 lg:grid-cols-12">
             {/* ─── Riwayat Setoran ─── */}
@@ -830,8 +830,19 @@ export default function EcoPoints() {
                     className="eco-voucher-card group overflow-hidden rounded-2xl border border-ink/10 bg-white/90 shadow-sm backdrop-blur-sm transition-all duration-400"
                     style={{ animationDelay: `${i * 0.1}s` }}
                   >
-                    {/* Top image area - solid cream background */}
-                    <div className="relative flex items-center justify-center overflow-hidden py-8 bg-cream">
+                    {/* Top image area with bg-tukar-poin */}
+                    <div className="relative flex items-center justify-center overflow-hidden py-8">
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          backgroundImage:
+                            "url(/backgrounds/bg-tukar-poin.png)",
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          backgroundRepeat: "no-repeat",
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/20" />
                       <div className="relative z-10 transition-transform duration-500 group-hover:scale-110">
                         {v.icon === "percent" && <PercentVoucherIcon />}
                         {v.icon === "rupiah" && <RupiahVoucherIcon />}
