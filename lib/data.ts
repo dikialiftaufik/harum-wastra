@@ -10,17 +10,17 @@ export const motif: Motif[] = [
   {
     id: "kawung",
     nama: "Kawung",
-    asal: "Yogyakarta",
+    asal: "Jawa Tengah",
     makna:
-      "Melambangkan siklus yang berulang dan kesucian, sejalan dengan gagasan ekonomi sirkular yang menjadikan bekas sebagai nilai baru.",
+      "Melambangkan kesucian, kesinambungan dan harapan baik.",
     gambar: "/motif/kawung.png",
   },
   {
     id: "sekar-jagad",
     nama: "Sekar Jagad",
-    asal: "Solo",
+    asal: "Jawa Tengah",
     makna:
-      "Berarti bunga dari seluruh penjuru, cocok untuk buket yang kaya bentuk dan warna.",
+      "Melambangkan keindahan bumi dan keberagaman budaya.",
     gambar: "/motif/sekar-jagad.png",
   },
   {
@@ -28,23 +28,23 @@ export const motif: Motif[] = [
     nama: "Mega Mendung",
     asal: "Cirebon",
     makna:
-      "Awan berlapis yang menenangkan, selaras dengan ketenangan dari relaksasi aroma terapi.",
+      "Melambangkan kesabaran, keteduhan, dan pembawa hujan.",
     gambar: "/motif/mega-mendung.png",
   },
   {
     id: "parang-rusak",
     nama: "Parang Rusak",
-    asal: "Yogyakarta",
+    asal: "Jawa Tengah",
     makna:
-      "Melambangkan ketekunan dan kekuatan, pas untuk hadiah pada momen formal atau wisuda.",
+      "Melambangkan keteguhan, keberanian, dan semangat pantang menyerah.",
     gambar: "/motif/parang-rusak.png",
   },
   {
     id: "pring-sedapur",
     nama: "Pring Sedapur",
-    asal: "Magetan",
+    asal: "Jawa Tengah",
     makna:
-      "Bermakna kebersamaan dan kelestarian, penuh arti untuk hadiah yang diberikan bersama.",
+      "Melambangkan kebersamaan, harmoni, dan pertumbuhan.",
     gambar: "/motif/pring-sedapur.png",
   },
   {
@@ -52,7 +52,7 @@ export const motif: Motif[] = [
     nama: "Truntum",
     asal: "Solo",
     makna:
-      "Berarti cinta yang bersemi kembali, penuh makna untuk hadiah bagi pasangan.",
+      "Melambangkan cinta yang tulus dan berkesinambungan.",
     gambar: "/motif/truntum.png",
   },
 ];
@@ -60,31 +60,76 @@ export const motif: Motif[] = [
 export type Produk = {
   slug: string;
   nama: string;
+  namaKatalog: string;
   harga: number;
+  hargaMulai: number;
   ringkas: string;
+  tagline: string;
+  deskripsiKatalog: string;
+  deskripsiDetail: string[];
   gambar: string;
+  gambarGaleri: string[];
   pita: string;
   satuan: string;
+  rating: number;
+  ulasan: number;
 };
 
 export const produk: Produk[] = [
   {
     slug: "buket",
-    nama: "Buket Aromaterapi",
+    nama: "Buket Lilin Aromaterapi",
+    namaKatalog: "Buket Lilin Aromaterapi",
     harga: 175000,
+    hargaMulai: 89000,
     ringkas: "Buket bunga lilin dengan aroma terapi, dibungkus kertas batik pilihan.",
-    gambar: "/gambar/produk-buket.svg",
+    tagline: "HADIAH YANG PENUH MAKNA",
+    deskripsiKatalog:
+      "Rangkaian lilin aromaterapi berbentuk bunga yang dibungkus kertas batik dan dilengkapi tatakan bernilai guna. Hadiah istimewa yang indah, harum, dan lebih ramah lingkungan.",
+    deskripsiDetail: [
+      "Buket Lilin Aromaterapi dari Nusaflo adalah perpaduan keindahan, keharuman, dan makna dalam satu hadiah istimewa.",
+      "Setiap rangkaian berisi lilin aromaterapi berbentuk bunga yang dibuat dengan detail, menghadirkan kehangatan dan aroma menenangkan untuk berbagai momen spesial. Dibungkus dengan kertas batik pilihan yang elegan, buket ini tidak hanya cantik untuk diberikan, tetapi juga lebih ramah lingkungan karena pembungkusnya dapat digunakan kembali.",
+      "Cocok untuk hadiah ulang tahun, ucapan terima kasih, anniversary, atau sekadar tanda perhatian untuk orang tersayang. Nusaflo percaya bahwa hadiah yang indah seharusnya juga membawa kebaikan bagi penerima dan lingkungan.",
+    ],
+    gambar: "/graphics/product.png",
+    gambarGaleri: [
+      "/graphics/product.png",
+      "/graphics/product-deskripsi.png",
+      "/graphics/product-details-1.png",
+      "/graphics/product-details-2.png",
+      "/graphics/product-details-3.png",
+    ],
     pita: "/motif/kawung.png",
     satuan: "per buket",
+    rating: 5.0,
+    ulasan: 99,
   },
   {
     slug: "souvenir",
-    nama: "Souvenir Bloom",
+    nama: "Souvenir Lilin Aromaterapi",
+    namaKatalog: "Souvenir Lilin Aromaterapi",
     harga: 30000,
+    hargaMulai: 49000,
     ringkas: "Satu kelopak bunga lilin, hadiah kecil yang manis untuk orang terkasih.",
-    gambar: "/gambar/produk-souvenir.svg",
+    tagline: "KENANGAN KECIL, DAMPAK BESAR",
+    deskripsiKatalog:
+      "Souvenir lilin aromaterapi dengan kemasan batik yang elegan dan dapat digunakan kembali. Pilihan tepat untuk acara spesial, sebagai tanda terima kasih yang berkesan dan berkelanjutan.",
+    deskripsiDetail: [
+      "Souvenir Lilin Aromaterapi dari Nusaflo hadir sebagai pilihan hadiah yang elegan dan bermakna.",
+      "Setiap kelopak lilin dibuat dengan cermat dari minyak jelantah yang telah diproses, menghasilkan aroma yang menenangkan dan bentuk yang indah. Dikemas dengan kertas batik pilihan yang dapat digunakan kembali.",
+      "Cocok untuk souvenir pernikahan, ulang tahun, atau acara spesial lainnya. Cantik, harum, dan bermakna.",
+    ],
+    gambar: "/graphics/product-lilin.png",
+    gambarGaleri: [
+      "/graphics/product-lilin.png",
+      "/graphics/product-details-1.png",
+      "/graphics/product-details-2.png",
+      "/graphics/product-details-3.png",
+    ],
     pita: "/motif/truntum.png",
     satuan: "per kelopak",
+    rating: 5.0,
+    ulasan: 99,
   },
 ];
 
