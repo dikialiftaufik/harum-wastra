@@ -4,14 +4,11 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import QRCode from "qrcode";
 import {
-  bacaProfil,
-  simpanProfil,
   bacaSetoran,
   saldoPoin,
   totalLiter,
   RUPIAH_PER_POIN,
   POIN_PER_LITER,
-  type Profil,
   type Setoran,
 } from "@/lib/poin";
 

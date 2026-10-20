@@ -8,7 +8,6 @@ interface CounterProps {
   suffix?: string;
   prefix?: string;
   decimals?: number;
-  separator?: string;
   className?: string;
   onComplete?: () => void;
 }
@@ -19,7 +18,6 @@ export function AnimatedCounter({
   suffix = "",
   prefix = "",
   decimals = 0,
-  separator = ",",
   className = "",
   onComplete,
 }: CounterProps) {
