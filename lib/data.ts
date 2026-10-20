@@ -78,10 +78,10 @@ export type Produk = {
 export const produk: Produk[] = [
   {
     slug: "buket",
-    nama: "Buket Lilin Aromaterapi",
-    namaKatalog: "Buket Lilin Aromaterapi",
+    nama: "Buket Aromaterapi",
+    namaKatalog: "Buket Aromaterapi",
     harga: 175000,
-    hargaMulai: 89000,
+    hargaMulai: 175000,
     ringkas: "Buket bunga lilin dengan aroma terapi, dibungkus kertas batik pilihan.",
     tagline: "HADIAH YANG PENUH MAKNA",
     deskripsiKatalog:
@@ -106,10 +106,10 @@ export const produk: Produk[] = [
   },
   {
     slug: "souvenir",
-    nama: "Souvenir Lilin Aromaterapi",
-    namaKatalog: "Souvenir Lilin Aromaterapi",
+    nama: "Souvenir Bloom",
+    namaKatalog: "Souvenir Bloom",
     harga: 30000,
-    hargaMulai: 49000,
+    hargaMulai: 30000,
     ringkas: "Satu kelopak bunga lilin, hadiah kecil yang manis untuk orang terkasih.",
     tagline: "KENANGAN KECIL, DAMPAK BESAR",
     deskripsiKatalog:
