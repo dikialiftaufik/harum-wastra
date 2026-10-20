@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { acara, type Acara } from "@/lib/data";
 
 const KATEGORI_ALL = "Semua";
@@ -46,49 +45,38 @@ export default function Agenda() {
   return (
     <>
       {/* ─── Hero Section ─── */}
-      <section className="eco-events-hero relative overflow-hidden pt-24 pb-16 md:pt-28 md:pb-20" style={{ backgroundImage: "url(/backgrounds/bg-eco-points-and-events.png)", backgroundSize: "cover", backgroundPosition: "center" }}>
-        <div className="absolute inset-0 bg-gradient-to-b from-cream/95 via-cream/90 to-cream/60" />
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "url(/motif/sekar-jagad.png)", backgroundSize: "120px", backgroundRepeat: "repeat" }} aria-hidden="true" />
-        <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            {/* Left: Text Content */}
-            <div className="eco-events-hero-text relative z-10">
-              <p className="eco-events-label font-mono text-xs font-semibold uppercase tracking-[0.25em] text-ink/60">
-                ECO EVENTS
-              </p>
-              <h1 className="eco-events-heading mt-4 font-display text-4xl leading-[1.15] text-ink italic sm:text-5xl lg:text-[3.5rem]">
-                Langkah kecil,{" "}
-                <br className="hidden sm:block" />
-                dampak besar{" "}
-                <br className="hidden sm:block" />
-                untuk lingkungan
-              </h1>
-              <p className="eco-events-desc mt-6 max-w-lg text-base leading-relaxed text-ink/70">
-                Ikuti berbagai kegiatan Nusaflo yang mengajak kita untuk lebih
-                peduli pada bumi melalui edukasi, workshop, dan aksi nyata
-                bersama komunitas.
-              </p>
-            </div>
-
-            {/* Right: Hero Image */}
-            <div className="eco-events-hero-image relative">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
-                <Image
-                  src="/backgrounds/bg-eco-events-hero.png"
-                  alt="Kegiatan eco events Nusaflo"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  priority
-                />
-              </div>
-            </div>
+      {/* Banner full-bleed memakai komposisi asli aset: sisi kiri sengaja kosong untuk teks */}
+      <section
+        className="eco-events-hero relative flex min-h-[420px] items-center overflow-hidden bg-cream pt-28 pb-20 md:min-h-[520px] md:pt-32 md:pb-24"
+        style={{
+          backgroundImage: "url(/backgrounds/bg-eco-events-hero.png)",
+          backgroundSize: "cover",
+          backgroundPosition: "left center",
+        }}
+      >
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-16">
+          <div className="eco-events-hero-text max-w-xl">
+            <p className="eco-events-label font-mono text-xs font-semibold uppercase tracking-[0.25em] text-ink/60">
+              ECO EVENTS
+            </p>
+            <h1 className="eco-events-heading mt-4 font-display text-4xl leading-[1.15] text-ink italic sm:text-5xl lg:text-[3.5rem]">
+              Langkah kecil,{" "}
+              <br className="hidden sm:block" />
+              dampak besar{" "}
+              <br className="hidden sm:block" />
+              untuk lingkungan
+            </h1>
+            <p className="eco-events-desc mt-6 max-w-lg text-base leading-relaxed text-ink/70">
+              Ikuti berbagai kegiatan Nusaflo yang mengajak kita untuk lebih
+              peduli pada bumi melalui edukasi, workshop, dan aksi nyata
+              bersama komunitas.
+            </p>
           </div>
         </div>
       </section>
 
       {/* ─── Event Listing Section ─── */}
-      <section className="eco-events-listing relative pb-16 md:pb-24" style={{ backgroundImage: "url(/backgrounds/bg-eco-points-and-events.png)", backgroundSize: "cover", backgroundPosition: "top center" }}>
+      <section className="eco-events-listing relative bg-cream pb-16 md:pb-24">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url(/motif/kawung.png)", backgroundSize: "100px", backgroundRepeat: "repeat" }} aria-hidden="true" />
         <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
           {/* Section Header with Filter */}
@@ -354,7 +342,7 @@ function EventRegistration({
   return (
     <>
       {/* ─── Hero Banner ─── */}
-      <section className="eco-events-hero relative overflow-hidden pt-24 pb-10 md:pt-28 md:pb-14" style={{ backgroundImage: "url(/backgrounds/bg-eco-points-and-events.png)", backgroundSize: "cover", backgroundPosition: "center" }}>
+      <section className="eco-events-hero relative overflow-hidden bg-cream pt-24 pb-10 md:pt-28 md:pb-14">
         <div className="absolute inset-0 bg-gradient-to-b from-cream/95 via-cream/90 to-cream/60" />
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "url(/motif/truntum.png)", backgroundSize: "100px", backgroundRepeat: "repeat" }} aria-hidden="true" />
         <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">

@@ -335,10 +335,6 @@ footer input[type="email"]:focus {
   animation: hero-fade-up 0.7s ease-out 0.4s both;
 }
 
-.eco-events-hero-image {
-  animation: hero-fade-up 0.8s ease-out 0.3s both;
-}
-
 /* Event card hover - subtle lift */
 .eco-event-card {
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
@@ -373,16 +369,212 @@ footer input[type="email"]:focus {
   animation: fade-in-up 0.6s ease-out 0.2s both;
 }
 
-/* Decorative batik overlay on hero */
-.eco-events-hero::before {
+/* ─── Eco Points Page ─── */
+
+/* Hero entrance animations */
+.eco-points-label {
+  animation: hero-fade-up 0.6s ease-out 0.1s both;
+}
+
+.eco-points-heading {
+  animation: hero-fade-up 0.7s ease-out 0.25s both;
+}
+
+.eco-points-desc {
+  animation: hero-fade-up 0.7s ease-out 0.4s both;
+}
+
+/* QR card */
+.eco-qr-card {
+  animation: hero-fade-up 0.7s ease-out 0.5s both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.eco-qr-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+/* Saldo card */
+.eco-saldo-card {
+  animation: hero-fade-up 0.7s ease-out 0.3s both;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.eco-saldo-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 40px rgba(123, 33, 46, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Simulasi card */
+.eco-simulasi-card {
+  animation: hero-fade-up 0.7s ease-out 0.45s both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.eco-simulasi-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+/* Step cards */
+.eco-step-card {
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.eco-step-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* Simulasi buttons */
+.eco-sim-btn {
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.eco-sim-btn:hover {
+  transform: scale(1.05);
+}
+
+.eco-sim-btn:active {
+  transform: scale(0.95);
+}
+
+/* Estimation cards */
+.eco-est-card {
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.eco-est-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-maroon);
+}
+
+/* Simulasi CTA button */
+.eco-sim-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.eco-sim-cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.eco-sim-cta:hover::before {
+  left: 100%;
+}
+
+/* Riwayat rows */
+.eco-riwayat-row {
+  transition: background 0.2s ease, transform 0.2s ease;
+  border-radius: 0.5rem;
+}
+
+.eco-riwayat-row:hover {
+  transform: translateX(4px);
+}
+
+/* Lokasi icon pulse on row hover */
+.eco-riwayat-row:hover .eco-lokasi-icon {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+/* Lihat Semua link */
+.eco-lihat-semua {
+  position: relative;
+}
+
+.eco-lihat-semua::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--color-maroon);
+  transition: width 0.3s ease;
+}
+
+.eco-lihat-semua:hover::after {
+  width: 100%;
+}
+
+/* Voucher cards */
+.eco-voucher-card {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease;
+}
+
+.eco-voucher-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+  border-color: rgba(123, 33, 46, 0.2);
+}
+
+/* Voucher CTA button shimmer */
+.eco-voucher-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.eco-voucher-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.eco-voucher-btn:hover::before {
+  left: 100%;
+}
+
+/* Login card animation */
+.eco-points-login {
+  animation: reveal-scale 0.6s ease-out 0.2s both;
+}
+
+/* Batik overlay on eco-points hero */
+.eco-points-hero::before {
   content: "";
   position: absolute;
   top: 0;
   right: 0;
-  width: 50%;
+  width: 40%;
   height: 100%;
-  background: url("/motif/truntum.png") repeat;
-  background-size: 100px;
-  opacity: 0.03;
+  background: url("/motif/sekar-jagad.png") repeat;
+  background-size: 120px;
+  opacity: 0.02;
   pointer-events: none;
 }
