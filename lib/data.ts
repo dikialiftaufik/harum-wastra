@@ -138,37 +138,76 @@ export function formatRupiah(n: number): string {
 }
 
 export type Acara = {
+  id: string;
   judul: string;
-  tanggal: string;
+  tanggalHari: string;
+  tanggalBulan: string;
+  tanggalLengkap: string;
   lokasi: string;
+  waktu: string;
+  kuota: string;
+  biaya: string;
   ringkas: string;
+  deskripsiLengkap: string;
+  kategori: "Edukasi" | "Workshop" | "Aksi Lingkungan" | "Komunitas";
+  gambar: string;
   status: string;
 };
 
-// Acara masih berupa rencana. Tanggal dan lokasi tetap ditulis agar halaman tidak kosong.
+// Acara yang tampil di halaman eco events, sesuai visual reference.
 export const acara: Acara[] = [
   {
-    judul: "Lomba Daur Ulang Jelantah",
-    tanggal: "8 November 2026",
-    lokasi: "Bandung",
+    id: "edukasi-jelantah",
+    judul: "Edukasi Pengelolaan Minyak Jelantah di Rumah Tangga",
+    tanggalHari: "18",
+    tanggalBulan: "Nov 2026",
+    tanggalLengkap: "18 Nov 2026",
+    lokasi: "Rumah Kreatif Nusaflo",
+    waktu: "14.00 – 16.00 WIB",
+    kuota: "30 peserta",
+    biaya: "Gratis",
     ringkas:
-      "Ajak warga mengumpulkan minyak goreng bekas dan mengubahnya menjadi produk bernilai.",
+      "Pelajari cara mengelola minyak jelantah dengan benar untuk lingkungan yang lebih bersih dan sehat.",
+    deskripsiLengkap:
+      "Pelajari cara mengelola minyak jelantah dengan benar untuk lingkungan yang lebih bersih dan sehat. Kegiatan ini mengajak kita memanfaatkan kembali limbah rumah tangga menjadi produk bernilai guna, sekaligus meningkatkan kesadaran akan gaya hidup berkelanjutan melalui edukasi.",
+    kategori: "Edukasi",
+    gambar: "/graphics/events-edukasi.png",
     status: "Akan datang",
   },
   {
-    judul: "Workshop Buket Lilin Aromaterapi",
-    tanggal: "22 November 2026",
-    lokasi: "Bandung",
+    id: "workshop-lilin",
+    judul: "Workshop Lilin Aromaterapi Ramah Lingkungan",
+    tanggalHari: "25",
+    tanggalBulan: "Nov 2026",
+    tanggalLengkap: "25 Nov 2026",
+    lokasi: "Studio Nusaflo",
+    waktu: "13.00 – 16.00 WIB",
+    kuota: "20 peserta",
+    biaya: "Gratis",
     ringkas:
-      "Belajar membuat buket bunga lilin dari jelantah bersama perajin Nusaflo.",
+      "Belajar membuat lilin aromaterapi dari jelantah dengan desain cantik dan tetap ramah lingkungan.",
+    deskripsiLengkap:
+      "Belajar membuat lilin aromaterapi dari jelantah dengan desain cantik dan tetap ramah lingkungan. Kegiatan ini mengajak kita memanfaatkan kembali limbah rumah tangga menjadi produk bernilai guna, sekaligus meningkatkan kesadaran akan gaya hidup berkelanjutan melalui kreativitas.",
+    kategori: "Workshop",
+    gambar: "/graphics/events-workshop.png",
     status: "Akan datang",
   },
   {
-    judul: "Panen Poin Bank Sampah",
-    tanggal: "13 Desember 2026",
-    lokasi: "Bandung",
+    id: "aksi-bersih",
+    judul: "Aksi Bersih Lingkungan Bersama Komunitas",
+    tanggalHari: "05",
+    tanggalBulan: "Des 2026",
+    tanggalLengkap: "05 Des 2026",
+    lokasi: "Taman Kota Bandung",
+    waktu: "08.00 – 11.00 WIB",
+    kuota: "50 peserta",
+    biaya: "Gratis",
     ringkas:
-      "Penukaran poin menjadi produk bagi penyetor jelantah se-Bandung.",
+      "Bergabung dalam aksi bersih lingkungan di area publik untuk menjaga bumi tetap bersih dan nyaman.",
+    deskripsiLengkap:
+      "Bergabung dalam aksi bersih lingkungan di area publik untuk menjaga bumi tetap bersih dan nyaman. Kegiatan ini mengajak kita memanfaatkan kembali limbah rumah tangga menjadi produk bernilai guna, sekaligus meningkatkan kesadaran akan gaya hidup berkelanjutan.",
+    kategori: "Aksi Lingkungan",
+    gambar: "/graphics/events-cleanup.png",
     status: "Akan datang",
   },
 ];
