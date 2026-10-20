@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
-  <defs>
-    <pattern id="parang" width="44" height="44" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <path d="M11,5 C27,15 27,29 11,39" fill="none" stroke="#7b212e" stroke-width="7" stroke-linecap="round"/>
-      <circle cx="33" cy="22" r="2.5" fill="#7b212e"/>
-    </pattern>
-  </defs>
-  <rect width="240" height="240" fill="url(#parang)"/>
-</svg>
