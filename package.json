@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "assets": "node scripts/optimize-assets.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "check": "tsc --noEmit && eslint . && next build"
   },
   "dependencies": {
     "next": "16.4.2",
