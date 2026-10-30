@@ -1,4 +1,5 @@
 import type { ItemKeranjang } from "./keranjang";
+import { bacaJson, tulisJson } from "./penyimpanan";
 
 export type Pesanan = {
   nomor: string;
@@ -29,16 +30,11 @@ export function buatNomor(): string {
 }
 
 export function simpanPesanan(p: Pesanan) {
-  localStorage.setItem(KUNCI, JSON.stringify(p));
+  tulisJson(KUNCI, p);
 }
 
 export function bacaPesananTerakhir(): Pesanan | null {
-  if (typeof window === "undefined") return null;
-  try {
-    return JSON.parse(localStorage.getItem(KUNCI) || "null") as Pesanan | null;
-  } catch {
-    return null;
-  }
+  return bacaJson<Pesanan | null>(KUNCI, null);
 }
 
 export function formatWaktu(iso: string): string {

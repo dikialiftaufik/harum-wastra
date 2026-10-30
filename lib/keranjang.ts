@@ -1,3 +1,5 @@
+import { bacaJson, hapusKunci, tulisJson } from "./penyimpanan";
+
 export type ItemKeranjang = {
   key: string;
   slug: string;
@@ -13,21 +15,16 @@ export type ItemKeranjang = {
 const KUNCI = "harum-wastra-keranjang";
 
 export function bacaKeranjang(): ItemKeranjang[] {
-  if (typeof window === "undefined") return [];
-  try {
-    return JSON.parse(localStorage.getItem(KUNCI) || "[]") as ItemKeranjang[];
-  } catch {
-    return [];
-  }
+  const data = bacaJson<ItemKeranjang[]>(KUNCI, []);
+  return Array.isArray(data) ? data : [];
 }
 
 export function simpanKeranjang(items: ItemKeranjang[]) {
-  localStorage.setItem(KUNCI, JSON.stringify(items));
+  tulisJson(KUNCI, items);
 }
 
 export function kosongkanKeranjang() {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem(KUNCI);
+  hapusKunci(KUNCI);
 }
 
 export function hapusItem(key: string): ItemKeranjang[] {
@@ -64,4 +61,8 @@ export function tambahKeKeranjang(
 
 export function totalKeranjang(items: ItemKeranjang[]): number {
   return items.reduce((sum, i) => sum + i.harga * i.qty, 0);
+}
+
+export function jumlahItemKeranjang(items: ItemKeranjang[]): number {
+  return items.reduce((total, i) => total + i.qty, 0);
 }

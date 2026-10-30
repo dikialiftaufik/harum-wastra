@@ -1,3 +1,5 @@
+import { bacaJson, tulisJson } from "./penyimpanan";
+
 export type Profil = { telepon: string };
 
 export type Setoran = {
@@ -18,18 +20,11 @@ const KUNCI_SETORAN = "harum-wastra-setoran";
 const KUNCI_SALDO = "harum-wastra-poin-saldo";
 
 function baca<T>(kunci: string, fallback: T): T {
-  if (typeof window === "undefined") return fallback;
-  try {
-    const mentah = localStorage.getItem(kunci);
-    if (mentah === null) return fallback;
-    return JSON.parse(mentah) as T;
-  } catch {
-    return fallback;
-  }
+  return bacaJson<T>(kunci, fallback);
 }
 
 function tulis(kunci: string, nilai: unknown) {
-  localStorage.setItem(kunci, JSON.stringify(nilai));
+  tulisJson(kunci, nilai);
 }
 
 export function bacaProfil(): Profil | null {
