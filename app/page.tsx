@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { StatCard } from "@/components/AnimatedCounter";
+import { GambarLatar } from "@/components/GambarLatar";
 
 export default function Beranda() {
   return (
@@ -8,14 +9,10 @@ export default function Beranda() {
       {/* ─── Hero Section ─── */}
       <section className="hero-section relative min-h-[92vh] overflow-hidden reveal-up">
         {/* Background image */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: "url(/backgrounds/bg-beranda-hero-section.png)",
-            backgroundSize: "cover",
-            backgroundPosition: "center right",
-            backgroundRepeat: "no-repeat",
-          }}
+        <GambarLatar
+          src="/backgrounds/bg-beranda-hero-section.png"
+          posisi="center right"
+          prioritas
         />
 
         {/* Gradient overlay for text readability */}
@@ -23,7 +20,7 @@ export default function Beranda() {
           className="absolute inset-0 z-[1]"
           style={{
             background:
-              "linear-gradient(105deg, rgba(245,239,230,0.97) 0%, rgba(245,239,230,0.93) 38%, rgba(245,239,230,0.65) 55%, rgba(245,239,230,0.1) 72%, transparent 100%)",
+              "linear-gradient(105deg, rgba(217,231,232,0.97) 0%, rgba(217,231,232,0.93) 38%, rgba(217,231,232,0.65) 55%, rgba(217,231,232,0.1) 72%, transparent 100%)",
           }}
         />
 
@@ -59,7 +56,7 @@ export default function Beranda() {
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
                 href="/setor"
-                className="hero-btn-primary group inline-flex items-center gap-2.5 rounded-full bg-maroon px-8 py-4 text-base font-medium text-cream transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20"
+                className="hero-btn-primary group inline-flex items-center gap-2.5 rounded-full bg-maroon px-8 py-4 text-base font-medium text-white transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20"
               >
                 Mulai Setor
                 <svg
@@ -99,15 +96,7 @@ export default function Beranda() {
       {/* ─── Mengapa Harum Wastra ─── */}
       <section className="mengapa-section relative overflow-hidden reveal-up">
         {/* Full background image */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: "url(/backgrounds/bg-beranda-mengapa-harum-wastra.png)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
+        <GambarLatar src="/backgrounds/bg-beranda-mengapa-harum-wastra.png" />
 
         <div className="relative z-10 mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
           {/* Section header - centered */}
@@ -218,15 +207,7 @@ export default function Beranda() {
       {/* ─── Cara Kerja (4 Langkah) ─── */}
       <section className="cara-kerja-section relative overflow-hidden reveal-up">
         {/* Full background image */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: "url(/backgrounds/bg-beranda-cara-kerja.png)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
+        <GambarLatar src="/backgrounds/bg-beranda-cara-kerja.png" />
 
         <div className="relative z-10 mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
           {/* Section header - left aligned */}
@@ -254,7 +235,7 @@ export default function Beranda() {
             <div className="cara-kerja-card reveal-stagger-1 group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
               {/* Image */}
               <div className="relative aspect-[4/3] overflow-hidden">
-                <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-cream">
+                <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-white">
                   01
                 </span>
                 <Image
@@ -287,7 +268,7 @@ export default function Beranda() {
             {/* Step 2 */}
             <div className="cara-kerja-card reveal-stagger-2 group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
               <div className="relative aspect-[4/3] overflow-hidden">
-                <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-cream">
+                <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-white">
                   02
                 </span>
                 <Image
@@ -321,7 +302,7 @@ export default function Beranda() {
             {/* Step 3 */}
             <div className="cara-kerja-card reveal-stagger-3 group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
               <div className="relative aspect-[4/3] overflow-hidden">
-                <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-cream">
+                <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-white">
                   03
                 </span>
                 <Image
@@ -354,7 +335,7 @@ export default function Beranda() {
             {/* Step 4 */}
             <div className="cara-kerja-card reveal-stagger-4 group overflow-hidden rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
               <div className="relative aspect-[4/3] overflow-hidden">
-                <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-cream">
+                <span className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-maroon text-sm font-bold text-white">
                   04
                 </span>
                 <Image
@@ -391,7 +372,7 @@ export default function Beranda() {
           <div className="mt-14 flex justify-center">
             <Link
               href="/setor"
-              className="group inline-flex items-center gap-2.5 rounded-full bg-maroon px-10 py-4 text-base font-medium text-cream transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20"
+              className="group inline-flex items-center gap-2.5 rounded-full bg-maroon px-10 py-4 text-base font-medium text-white transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20"
             >
               Mulai Setor
               <svg
@@ -434,15 +415,7 @@ export default function Beranda() {
       {/* ─── Angka Dampak ─── */}
       <section className="angka-dampak-section relative overflow-hidden reveal-up">
         {/* Full background image */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: "url(/backgrounds/bg-beranda-angka-dampak.png)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
+        <GambarLatar src="/backgrounds/bg-beranda-angka-dampak.png" />
 
         <div className="relative z-10 mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
           {/* Section header - centered */}
