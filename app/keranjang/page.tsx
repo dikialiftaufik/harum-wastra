@@ -12,8 +12,20 @@ import {
   kosongkanKeranjang,
   type ItemKeranjang,
 } from "@/lib/keranjang";
-import { formatRupiah } from "@/lib/data";
+import { formatRupiah, tileMotif } from "@/lib/data";
 import { buatNomor, simpanPesanan, type Pesanan } from "@/lib/pesanan";
+import {
+  bacaAlamat,
+  buatIdAlamat,
+  simpanDaftarAlamat,
+  validasiAlamat,
+  type Alamat,
+  type GalatAlamat,
+} from "@/lib/alamat";
+import { GambarLatar } from "@/components/GambarLatar";
+import { MotifTile } from "@/components/MotifTile";
+import { Dialog } from "@/components/Dialog";
+import { aktifkanReveal } from "@/lib/reveal";
 
 /* ─── Constants ─── */
 
@@ -37,11 +49,13 @@ const BANKS = [
   { id: "mandiri", label: "Mandiri", logo: "/graphics/mandiri.webp" },
 ] as const;
 
-const ALAMAT_TERSIMPAN = {
+const ALAMAT_KOSONG: Omit<Alamat, "id"> = {
   label: "Rumah",
-  nama: "Diki Alif Taufik",
-  telepon: "+62 812 3456 7890",
-  jalan: "Jl. Melati No. 12, Rt 03/Rw 01, Kec. Coblong, Kota Bandung, Jawa Barat 40132",
+  nama: "",
+  telepon: "",
+  jalan: "",
+  kota: "",
+  kodepos: "",
 };
 
 type PengirimanId = (typeof PENGIRIMAN)[number]["id"];
@@ -108,6 +122,59 @@ const radioDot = (active: boolean) =>
 const radioSmall = (active: boolean) =>
   `w-4 h-4 rounded-full flex-shrink-0 transition-all ${active ? "border-[4px] border-maroon" : "border-2 border-ink/20"}`;
 
+/* ─── Field alamat (dipakai di dialog tambah/ubah alamat) ─── */
+
+function KolomAlamat({
+  id,
+  label,
+  nilai,
+  onChange,
+  galat,
+  placeholder,
+  inputMode,
+  maxLength,
+  wajib = true,
+}: {
+  id: string;
+  label: string;
+  nilai: string;
+  onChange: (v: string) => void;
+  galat?: string;
+  placeholder: string;
+  inputMode?: "text" | "tel" | "numeric";
+  maxLength?: number;
+  wajib?: boolean;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="mb-1 block text-sm font-medium text-ink">
+        {label}
+        {wajib && <span className="text-maroon"> *</span>}
+      </label>
+      <input
+        id={id}
+        value={nilai}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        inputMode={inputMode}
+        maxLength={maxLength}
+        aria-invalid={Boolean(galat)}
+        aria-describedby={galat ? `${id}-galat` : undefined}
+        className={`w-full rounded-xl border bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 ${
+          galat
+            ? "border-red-400 focus:border-red-500 focus:ring-red-100"
+            : "border-ink/15 focus:border-maroon/50 focus:ring-maroon/10"
+        }`}
+      />
+      {galat && (
+        <p id={`${id}-galat`} className="mt-1 text-xs text-red-600">
+          {galat}
+        </p>
+      )}
+    </div>
+  );
+}
+
 /* ─── Main Component ─── */
 
 export default function Keranjang() {
@@ -120,27 +187,28 @@ export default function Keranjang() {
   const [bank, setBank] = useState<BankId>("bca");
   const [copied, setCopied] = useState(false);
 
+  /* Alamat pengiriman */
+  const [daftarAlamat, setDaftarAlamat] = useState<Alamat[]>([]);
+  const [alamatId, setAlamatId] = useState("utama");
+  const [dialogAlamat, setDialogAlamat] = useState<
+    null | { mode: "pilih" } | { mode: "form"; data: Omit<Alamat, "id">; id: string | null }
+  >(null);
+  const [galatAlamat, setGalatAlamat] = useState<GalatAlamat>({});
+
   useEffect(() => {
     setItems(bacaKeranjang());
+    const alamat = bacaAlamat();
+    setDaftarAlamat(alamat);
+    setAlamatId(alamat[0]?.id ?? "utama");
     setSiap(true);
   }, []);
 
-  /* IntersectionObserver untuk reveal kartu checkout (render ulang saat ganti step) */
+  const alamatTerpilih =
+    daftarAlamat.find((a) => a.id === alamatId) ?? daftarAlamat[0];
+
+  /* Animasi muncul untuk kartu checkout (diulang saat ganti langkah). */
   useEffect(() => {
-    const elems = document.querySelectorAll(".reveal-on-scroll");
-    if (!elems.length) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("is-visible");
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    elems.forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
+    return aktifkanReveal();
   }, [siap, step]);
 
   const subtotal = totalKeranjang(items);
@@ -164,20 +232,96 @@ export default function Keranjang() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
   function copyNorek() {
-    navigator.clipboard.writeText("123456789012");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    const norek = "123456789012";
+    const cadangan = () => {
+      // Peramban tanpa izin clipboard: tetap beri umpan balik agar tombol tidak diam.
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    };
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(norek).then(cadangan).catch(cadangan);
+    } else {
+      cadangan();
+    }
   }
+
+  /* ─── Alamat ─── */
+
+  function bukaFormAlamat(data?: Alamat) {
+    setGalatAlamat({});
+    setDialogAlamat(
+      data
+        ? { mode: "form", id: data.id, data: { ...data } }
+        : { mode: "form", id: null, data: { ...ALAMAT_KOSONG } }
+    );
+  }
+
+  function simpanFormAlamat() {
+    if (dialogAlamat?.mode !== "form") return;
+    const galat = validasiAlamat(dialogAlamat.data);
+    setGalatAlamat(galat);
+    if (Object.keys(galat).length > 0) return;
+
+    const dataBersih = {
+      ...dialogAlamat.data,
+      label: dialogAlamat.data.label.trim() || "Rumah",
+      nama: dialogAlamat.data.nama.trim(),
+      telepon: dialogAlamat.data.telepon.trim(),
+      jalan: dialogAlamat.data.jalan.trim(),
+      kota: dialogAlamat.data.kota.trim(),
+      kodepos: dialogAlamat.data.kodepos.trim(),
+    };
+
+    let berikutnya: Alamat[];
+    if (dialogAlamat.id) {
+      berikutnya = daftarAlamat.map((a) =>
+        a.id === dialogAlamat.id ? { ...dataBersih, id: a.id } : a
+      );
+    } else {
+      const baru: Alamat = { ...dataBersih, id: buatIdAlamat() };
+      berikutnya = [...daftarAlamat, baru];
+      setAlamatId(baru.id);
+    }
+
+    simpanDaftarAlamat(berikutnya);
+    setDaftarAlamat(berikutnya);
+    setDialogAlamat(null);
+  }
+
+  function hapusAlamatTerdaftar(id: string) {
+    if (daftarAlamat.length <= 1) return;
+    const berikutnya = daftarAlamat.filter((a) => a.id !== id);
+    simpanDaftarAlamat(berikutnya);
+    setDaftarAlamat(berikutnya);
+    if (alamatId === id) setAlamatId(berikutnya[0].id);
+  }
+
+  function ubahFieldAlamat(field: keyof Omit<Alamat, "id">, nilai: string) {
+    // Pembaruan fungsional supaya isian terakhir tidak pernah tertinggal
+    // walau pengguna mengetik lalu langsung menekan "Simpan alamat".
+    setDialogAlamat((sebelum) =>
+      sebelum?.mode === "form"
+        ? { ...sebelum, data: { ...sebelum.data, [field]: nilai } }
+        : sebelum
+    );
+    setGalatAlamat((sebelum) =>
+      sebelum[field] ? { ...sebelum, [field]: undefined } : sebelum
+    );
+  }
+
   function konfirmasi() {
+    const tujuan = alamatTerpilih;
+    if (!tujuan) return;
+
     const pesanan: Pesanan = {
       nomor: buatNomor(),
       waktu: new Date().toISOString(),
       items,
-      nama: ALAMAT_TERSIMPAN.nama,
-      telepon: ALAMAT_TERSIMPAN.telepon,
-      alamat: ALAMAT_TERSIMPAN.jalan,
-      kota: "Bandung",
-      kodepos: "40132",
+      nama: tujuan.nama,
+      telepon: tujuan.telepon,
+      alamat: tujuan.jalan,
+      kota: tujuan.kota,
+      kodepos: tujuan.kodepos,
       catatan: "",
       metode:
         metodeBayar === "transfer"
@@ -192,33 +336,46 @@ export default function Keranjang() {
     router.push("/pesanan/berhasil");
   }
 
-  if (!siap) return null;
+  if (!siap) {
+    // Kerangka seukuran halaman asli: pengguna melihat judul dan struktur
+    // halaman, bukan layar kosong, selama data peramban dibaca.
+    return (
+      <section className="page-top min-h-[70vh] bg-cream pb-20">
+        <div className="mx-auto max-w-[1280px] px-5 sm:px-8 lg:px-16">
+          <p className="eyebrow text-ink/60">Checkout</p>
+          <h1 className="mt-2 font-display text-3xl italic leading-tight text-maroon sm:text-4xl">
+            Lengkapi Pesanan Anda
+          </h1>
+          <p className="mt-3 max-w-lg text-ink/65">
+            Pastikan semua detail sudah sesuai sebelum melanjutkan ke pembayaran.
+          </p>
+          <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_400px]">
+            <div className="space-y-4">
+              <div className="h-44 animate-pulse rounded-2xl bg-white/70" />
+              <div className="h-44 animate-pulse rounded-2xl bg-white/70" />
+            </div>
+            <div className="h-80 animate-pulse rounded-2xl bg-white/70" />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   /* ── Empty cart ── */
   if (items.length === 0) {
     return (
-      <section
-        className="relative min-h-[60vh] flex items-center justify-center overflow-hidden reveal-up"
-        style={{
-          backgroundImage: "url(/backgrounds/bg-beranda-hero-section.png)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-cream/95 via-cream/90 to-cream/60" />
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: "url(/motif/sekar-jagad.png)", backgroundSize: "120px", backgroundRepeat: "repeat" }}
-          aria-hidden="true"
-        />
-        <div className="relative z-10 text-center px-5">
+      <section className="page-top relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-cream pb-16 reveal-up">
+        <GambarLatar src="/backgrounds/bg-beranda-hero-section.png" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-cream/95 via-cream/90 to-cream/60" />
+        <MotifTile id="sekar-jagad" ukuran={120} className="z-[1] opacity-10" />
+        <div className="relative z-10 px-5 text-center">
           <h1 className="text-3xl text-maroon sm:text-4xl font-display">Keranjang kosong</h1>
-          <p className="mt-4 text-ink/70 max-w-md mx-auto">
+          <p className="mt-4 text-ink/75 max-w-md mx-auto">
             Belum ada produk di keranjang. Pilih buket atau souvenir dan tentukan motif batiknya.
           </p>
           <Link
             href="/katalog"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-maroon px-8 py-4 text-base font-medium text-cream transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-maroon px-8 py-4 text-base font-medium text-white transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20"
           >
             Lihat Katalog
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
@@ -230,6 +387,7 @@ export default function Keranjang() {
 
   /* ── Checkout Page ── */
   return (
+    <>
     <section className="checkout-page relative min-h-screen bg-cream pb-20 reveal-up">
       {/* ━━ Header ━━ */}
       <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8 lg:px-16 pt-28 sm:pt-32 pb-12">
@@ -267,7 +425,7 @@ export default function Keranjang() {
                       <div
                         className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 text-xs font-bold transition-colors duration-300 ${
                           step >= nomor
-                            ? "border-maroon bg-maroon text-cream"
+                            ? "border-maroon bg-maroon text-white"
                             : "border-ink/20 bg-cream text-ink/40"
                         }`}
                       >
@@ -304,39 +462,64 @@ export default function Keranjang() {
                       <span className="text-maroon p-2 bg-maroon/10 rounded-lg"><IconPin /></span>
                       <h2 className="text-lg font-semibold text-ink">1. Alamat Pengiriman</h2>
                     </div>
-                    <button className="text-xs text-ink/50 flex items-center gap-1 hover:text-ink transition-colors">
-                      Pilih alamat tersimpan
+                    <button
+                      type="button"
+                      onClick={() => setDialogAlamat({ mode: "pilih" })}
+                      className="flex items-center gap-1 text-xs text-ink/60 transition-colors hover:text-maroon"
+                    >
+                      {daftarAlamat.length > 1 ? "Pilih alamat tersimpan" : "Kelola alamat"}
                       <IconChevronRight />
                     </button>
                   </div>
 
                   {/* Saved address (selected) */}
-                  <div className="rounded-xl border-2 border-maroon/40 bg-maroon/[0.02] p-4 mb-3">
+                  <div className="mb-3 rounded-xl border-2 border-maroon/40 bg-maroon/[0.02] p-4">
                     <div className="flex items-start gap-3">
                       <div className="mt-1"><div className={radioDot(true)} /></div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between">
-                          <p className="font-semibold text-ink">{ALAMAT_TERSIMPAN.label}</p>
-                          <button className="text-xs text-maroon border border-maroon/30 rounded-full px-4 py-1 hover:bg-maroon/5 transition-colors">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-3">
+                          <p className="font-semibold text-ink">
+                            {alamatTerpilih?.label ?? "Rumah"}
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => alamatTerpilih && bukaFormAlamat(alamatTerpilih)}
+                            className="rounded-full border border-maroon/30 px-4 py-1 text-xs text-maroon transition-colors hover:bg-maroon/5"
+                          >
                             Ubah
                           </button>
                         </div>
-                        <p className="text-sm text-ink mt-1">{ALAMAT_TERSIMPAN.nama}</p>
-                        <p className="text-sm text-ink/60">{ALAMAT_TERSIMPAN.telepon}</p>
-                        <p className="text-sm text-ink/60 mt-0.5">{ALAMAT_TERSIMPAN.jalan}</p>
+                        <p className="mt-1 text-sm text-ink">
+                          {alamatTerpilih?.nama ?? "-"}
+                        </p>
+                        <p className="text-sm text-ink/65">
+                          {alamatTerpilih?.telepon ?? "-"}
+                        </p>
+                        <p className="mt-0.5 text-sm text-ink/65">
+                          {alamatTerpilih?.jalan ?? "-"}
+                        </p>
+                        <p className="text-sm text-ink/65">
+                          {alamatTerpilih
+                            ? `${alamatTerpilih.kota} ${alamatTerpilih.kodepos}`
+                            : "-"}
+                        </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Add new address */}
-                  <div className="rounded-xl border border-ink/10 p-4 flex items-center gap-3 hover:border-ink/25 transition-colors cursor-pointer group">
+                  <button
+                    type="button"
+                    onClick={() => bukaFormAlamat()}
+                    className="group flex w-full items-center gap-3 rounded-xl border border-ink/10 p-4 text-left transition-colors hover:border-ink/25"
+                  >
                     <div className={radioDot(false)} />
                     <div className="flex-1">
                       <p className="text-sm font-medium text-ink">Tambah alamat baru</p>
-                      <p className="text-xs text-ink/50">Simpan alamat lain untuk pemesanan berikutnya</p>
+                      <p className="text-xs text-ink/60">Simpan alamat lain untuk pemesanan berikutnya</p>
                     </div>
-                    <IconChevronRight className="text-ink/25 group-hover:text-ink/50 transition-colors" />
-                  </div>
+                    <IconChevronRight className="text-ink/25 transition-colors group-hover:text-ink/50" />
+                  </button>
                   <div className="my-6 border-t border-ink/10" />
 
                   {/* ── 2. Metode Pengiriman ── */}
@@ -519,7 +702,7 @@ export default function Keranjang() {
                         <div
                           className="absolute inset-0"
                           style={{
-                            backgroundImage: `url(${it.pita})`,
+                            backgroundImage: `url(${tileMotif(it.pita)})`,
                             backgroundSize: "40px",
                             backgroundRepeat: "repeat",
                           }}
@@ -599,7 +782,7 @@ export default function Keranjang() {
                 <div className="reveal-on-scroll reveal-stagger-4">
                   <button
                     onClick={goToPayment}
-                    className="w-full rounded-full bg-maroon px-8 py-4 text-cream font-medium text-base transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20 flex items-center justify-center gap-2 checkout-cta"
+                    className="w-full rounded-full bg-maroon px-8 py-4 text-white font-medium text-base transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20 flex items-center justify-center gap-2 checkout-cta"
                   >
                     Lanjut ke Pembayaran
                     <IconChevronRight />
@@ -626,7 +809,7 @@ export default function Keranjang() {
                   <div className="reveal-on-scroll reveal-stagger-5">
                     <button
                       onClick={konfirmasi}
-                      className="w-full rounded-full bg-maroon px-8 py-4 text-cream font-medium text-base transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20 flex items-center justify-center gap-2 checkout-cta"
+                      className="w-full rounded-full bg-maroon px-8 py-4 text-white font-medium text-base transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20 flex items-center justify-center gap-2 checkout-cta"
                     >
                       Konfirmasi Pembayaran
                       <IconChevronRight />
@@ -651,5 +834,208 @@ export default function Keranjang() {
         </div>
       </div>
     </section>
+
+      {/* ─── Dialog alamat ─── */}
+      <Dialog
+        buka={dialogAlamat !== null}
+        onTutup={() => setDialogAlamat(null)}
+        judul={
+          dialogAlamat?.mode === "form"
+            ? dialogAlamat.id
+              ? "Ubah alamat"
+              : "Tambah alamat baru"
+            : "Pilih alamat pengiriman"
+        }
+        deskripsi={
+          dialogAlamat?.mode === "form"
+            ? "Alamat ini dipakai sebagai tujuan pengiriman pesanan Anda."
+            : "Pilih salah satu alamat, atau tambahkan alamat baru."
+        }
+        aksi={
+          dialogAlamat?.mode === "form" ? (
+            <>
+              <button
+                type="button"
+                onClick={simpanFormAlamat}
+                className="inline-flex items-center justify-center rounded-full bg-maroon px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-maroon-dark"
+              >
+                Simpan alamat
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  dialogAlamat.id
+                    ? setDialogAlamat({ mode: "pilih" })
+                    : setDialogAlamat(null)
+                }
+                className="inline-flex items-center justify-center rounded-full border border-ink/15 px-6 py-3 text-sm font-semibold text-ink/75 transition-colors hover:border-maroon/30 hover:text-maroon"
+              >
+                {dialogAlamat.id ? "Kembali" : "Batal"}
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={() => bukaFormAlamat()}
+                className="inline-flex items-center justify-center rounded-full bg-maroon px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-maroon-dark"
+              >
+                Tambah alamat baru
+              </button>
+              <button
+                type="button"
+                onClick={() => setDialogAlamat(null)}
+                className="inline-flex items-center justify-center rounded-full border border-ink/15 px-6 py-3 text-sm font-semibold text-ink/75 transition-colors hover:border-maroon/30 hover:text-maroon"
+              >
+                Tutup
+              </button>
+            </>
+          )
+        }
+      >
+        <div className="mt-5 text-left">
+          {dialogAlamat?.mode === "pilih" ? (
+            <ul className="space-y-3">
+              {daftarAlamat.map((a) => (
+                <li
+                  key={a.id}
+                  className={`rounded-xl border-2 p-4 transition-colors ${
+                    a.id === alamatId
+                      ? "border-maroon/40 bg-maroon/[0.02]"
+                      : "border-ink/10"
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAlamatId(a.id);
+                        setDialogAlamat(null);
+                      }}
+                      aria-pressed={a.id === alamatId}
+                      className="flex flex-1 items-start gap-3 text-left"
+                    >
+                      <span className="mt-0.5">
+                        <span className={radioDot(a.id === alamatId)} />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-sm font-semibold text-ink">
+                          {a.label} · {a.nama}
+                        </span>
+                        <span className="block text-xs text-ink/65">
+                          {a.telepon}
+                        </span>
+                        <span className="block text-xs text-ink/65">
+                          {a.jalan}, {a.kota} {a.kodepos}
+                        </span>
+                      </span>
+                    </button>
+                    <div className="flex shrink-0 flex-col gap-1">
+                      <button
+                        type="button"
+                        onClick={() => bukaFormAlamat(a)}
+                        className="rounded-full border border-maroon/30 px-3 py-1 text-xs text-maroon transition-colors hover:bg-maroon/5"
+                      >
+                        Ubah
+                      </button>
+                      {daftarAlamat.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => hapusAlamatTerdaftar(a.id)}
+                          className="rounded-full border border-ink/15 px-3 py-1 text-xs text-ink/60 transition-colors hover:border-red-300 hover:text-red-600"
+                        >
+                          Hapus
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            dialogAlamat?.mode === "form" && (
+              <div className="space-y-3">
+                <KolomAlamat
+                  id="alamat-label"
+                  label="Label alamat"
+                  nilai={dialogAlamat.data.label}
+                  onChange={(v) => ubahFieldAlamat("label", v)}
+                  placeholder="Rumah, Kantor, Kos"
+                  maxLength={20}
+                  wajib={false}
+                />
+                <KolomAlamat
+                  id="alamat-nama"
+                  label="Nama penerima"
+                  nilai={dialogAlamat.data.nama}
+                  onChange={(v) => ubahFieldAlamat("nama", v)}
+                  galat={galatAlamat.nama}
+                  placeholder="Nama lengkap"
+                  maxLength={60}
+                />
+                <KolomAlamat
+                  id="alamat-telepon"
+                  label="Nomor telepon"
+                  nilai={dialogAlamat.data.telepon}
+                  onChange={(v) => ubahFieldAlamat("telepon", v)}
+                  galat={galatAlamat.telepon}
+                  placeholder="0812 3456 7890"
+                  inputMode="tel"
+                  maxLength={20}
+                />
+                <div>
+                  <label
+                    htmlFor="alamat-jalan"
+                    className="mb-1 block text-sm font-medium text-ink"
+                  >
+                    Alamat lengkap<span className="text-maroon"> *</span>
+                  </label>
+                  <textarea
+                    id="alamat-jalan"
+                    rows={3}
+                    value={dialogAlamat.data.jalan}
+                    onChange={(e) => ubahFieldAlamat("jalan", e.target.value)}
+                    placeholder="Jalan, nomor rumah, RT/RW, kecamatan"
+                    aria-invalid={Boolean(galatAlamat.jalan)}
+                    aria-describedby={galatAlamat.jalan ? "alamat-jalan-galat" : undefined}
+                    className={`w-full resize-none rounded-xl border bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 ${
+                      galatAlamat.jalan
+                        ? "border-red-400 focus:border-red-500 focus:ring-red-100"
+                        : "border-ink/15 focus:border-maroon/50 focus:ring-maroon/10"
+                    }`}
+                  />
+                  {galatAlamat.jalan && (
+                    <p id="alamat-jalan-galat" className="mt-1 text-xs text-red-600">
+                      {galatAlamat.jalan}
+                    </p>
+                  )}
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <KolomAlamat
+                    id="alamat-kota"
+                    label="Kota"
+                    nilai={dialogAlamat.data.kota}
+                    onChange={(v) => ubahFieldAlamat("kota", v)}
+                    galat={galatAlamat.kota}
+                    placeholder="Bandung"
+                    maxLength={40}
+                  />
+                  <KolomAlamat
+                    id="alamat-kodepos"
+                    label="Kode pos"
+                    nilai={dialogAlamat.data.kodepos}
+                    onChange={(v) => ubahFieldAlamat("kodepos", v)}
+                    galat={galatAlamat.kodepos}
+                    placeholder="40132"
+                    inputMode="numeric"
+                    maxLength={5}
+                  />
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      </Dialog>
+    </>
   );
 }
