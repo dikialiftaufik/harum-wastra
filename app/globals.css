@@ -1,12 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* Warna Harum Wastra. Disetel sekali di sini dan dipakai di seluruh halaman. */
-  --color-maroon: #7b212e;
-  --color-maroon-dark: #5c161f;
-  --color-cream: #f5efe6;
-  --color-ink: #292423;
-  --color-clay: #8a7f76;
+  /* Warna Harum Wastra – Palet teal. Disetel sekali di sini dan dipakai di seluruh halaman. */
+  --color-maroon: #096D73;
+  --color-maroon-dark: #07595E;
+  --color-cream: #D9E7E8;
+  --color-ink: #182729;
+  --color-clay: #495D60;
+
+  /* Garis kartu & navbar */
+  --color-card-border: #BCC9CA;
+
+  /* Teks di atas tombol/bidang warna brand */
+  --color-btn-text: #FFFFFF;
 
   /* Huruf. Diatur di layout.tsx lewat variabel berikut. */
   --font-display: var(--font-fraunces), Georgia, serif;
@@ -18,6 +24,33 @@ body {
   background: var(--color-cream);
   color: var(--color-ink);
   font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Tinggi navbar tetap: header pt-3 (0.75rem) + nav ±4.5rem.
+   Dipakai agar konten halaman tidak pernah tertutup navbar. */
+:root {
+  --nav-h: 5.25rem;
+  --nav-gap: 1.75rem;
+}
+
+/* Jarak atas untuk halaman yang tidak memakai hero berlatarbelakang penuh. */
+.page-top {
+  padding-top: calc(var(--nav-h) + var(--nav-gap));
+}
+
+/* Target lompatan anchor tidak tertutup navbar. */
+.anchor-offset {
+  scroll-margin-top: calc(var(--nav-h) + 1rem);
+}
+
+/* Baris judul kecil berulang (label seksi) */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
 }
 
 h1,
@@ -33,7 +66,7 @@ h3 {
 }
 
 .navbar-glass {
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--color-card-border);
   box-shadow:
     0 2px 16px rgba(0, 0, 0, 0.04),
     0 1px 4px rgba(0, 0, 0, 0.02);
@@ -120,6 +153,16 @@ h3 {
   transform: translateY(-4px);
 }
 
+/* Mobile: disable hover transforms for touch */
+@media (hover: none) {
+  .cara-kerja-card:hover,
+  .angka-card:hover,
+  .eco-event-card:hover,
+  .eco-voucher-card:hover {
+    transform: none;
+  }
+}
+
 .angka-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -131,19 +174,37 @@ h3 {
 /* ─── Mengapa Section Styling ─── */
 
 .mengapa-section {
-  min-height: 90vh;
+  min-height: auto;
+}
+
+@media (min-width: 768px) {
+  .mengapa-section {
+    min-height: 90vh;
+  }
 }
 
 /* ─── Cara Kerja Section ─── */
 
 .cara-kerja-section {
-  min-height: 100vh;
+  min-height: auto;
+}
+
+@media (min-width: 768px) {
+  .cara-kerja-section {
+    min-height: 100vh;
+  }
 }
 
 /* ─── Angka Dampak Section ─── */
 
 .angka-dampak-section {
-  min-height: 90vh;
+  min-height: auto;
+}
+
+@media (min-width: 768px) {
+  .angka-dampak-section {
+    min-height: 90vh;
+  }
 }
 
 /* ─── Scroll Reveal Animations ─── */
@@ -188,14 +249,22 @@ h3 {
 .reveal-stagger-5 { animation-delay: 0.5s; }
 .reveal-stagger-6 { animation-delay: 0.6s; }
 
-/* IntersectionObserver-triggered classes */
+/* IntersectionObserver-triggered classes.
+   Default: konten terlihat penuh (aman saat JavaScript mati). Kelas
+   `reveal-tunda` baru dipasang oleh lib/reveal.ts untuk elemen yang masih
+   di bawah lipatan layar. */
 .reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
+  opacity: 1;
+  transform: none;
   transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
 
-.reveal-on-scroll.is-visible {
+.reveal-on-scroll.reveal-tunda {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.reveal-on-scroll.reveal-tunda.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -210,7 +279,8 @@ h3 {
   .reveal-stagger-4,
   .reveal-stagger-5,
   .reveal-stagger-6,
-  .reveal-on-scroll {
+  .reveal-on-scroll,
+  .reveal-on-scroll.reveal-tunda {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
@@ -226,7 +296,7 @@ html {
 /* ─── Selection color ─── */
 ::selection {
   background: var(--color-maroon);
-  color: var(--color-cream);
+  color: var(--color-btn-text);
 }
 
 /* ─── Focus ring for accessibility ─── */
@@ -317,7 +387,7 @@ details summary::-webkit-details-marker {
 
 /* ─── Footer Input Styles ─── */
 footer input[type="email"]:focus {
-  box-shadow: 0 0 0 2px rgba(245, 239, 230, 0.2);
+  box-shadow: 0 0 0 2px rgba(9, 109, 115, 0.2);
 }
 
 /* ─── Eco Events Page ─── */
@@ -361,7 +431,7 @@ footer input[type="email"]:focus {
 
 /* Form input focus glow */
 .eco-form-input:focus {
-  box-shadow: 0 0 0 3px rgba(123, 33, 46, 0.08);
+  box-shadow: 0 0 0 3px rgba(9, 109, 115, 0.08);
 }
 
 /* Event detail card entrance */
@@ -407,7 +477,7 @@ footer input[type="email"]:focus {
 .eco-saldo-card:hover {
   transform: translateY(-4px);
   box-shadow:
-    0 20px 40px rgba(123, 33, 46, 0.2),
+    0 20px 40px rgba(9, 109, 115, 0.2),
     0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
@@ -531,7 +601,7 @@ footer input[type="email"]:focus {
   box-shadow:
     0 16px 40px rgba(0, 0, 0, 0.08),
     0 4px 12px rgba(0, 0, 0, 0.04);
-  border-color: rgba(123, 33, 46, 0.2);
+  border-color: rgba(9, 109, 115, 0.2);
 }
 
 /* Voucher CTA button shimmer */
@@ -565,7 +635,8 @@ footer input[type="email"]:focus {
   animation: reveal-scale 0.6s ease-out 0.2s both;
 }
 
-/* Batik overlay on eco-points hero */
+/* Batik overlay on eco-points hero. Memakai tile kecil (motif-tile) supaya
+   tidak mengunduh PNG motif berukuran megabyte hanya untuk pola 2% opacity. */
 .eco-points-hero::before {
   content: "";
   position: absolute;
@@ -573,8 +644,70 @@ footer input[type="email"]:focus {
   right: 0;
   width: 40%;
   height: 100%;
-  background: url("/motif/sekar-jagad.png") repeat;
+  background: url("/motif-tile/sekar-jagad.webp") repeat;
   background-size: 120px;
-  opacity: 0.02;
+  opacity: 0.04;
   pointer-events: none;
+}
+
+/* ─── Dialog / popup ─── */
+
+@keyframes dialog-masuk {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes tirai-masuk {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.dialog-tirai {
+  animation: tirai-masuk 0.18s ease-out both;
+}
+
+.dialog-panel {
+  animation: dialog-masuk 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog-tirai,
+  .dialog-panel {
+    animation: none !important;
+  }
+}
+
+
+/* ─── Mobile-first touch improvements ─── */
+
+/* Larger touch targets on mobile */
+@media (max-width: 767px) {
+  .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Better spacing for mobile cards */
+  .cara-kerja-card,
+  .mengapa-card,
+  .angka-card {
+    border-radius: 1rem;
+  }
+
+  /* Smoother mobile scroll for filter buttons */
+  .eco-filter-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
