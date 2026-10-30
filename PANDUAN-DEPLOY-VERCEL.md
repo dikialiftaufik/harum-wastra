@@ -19,10 +19,18 @@ Jalankan di folder proyek (`web-harum-wastra`):
 
 ```bash
 npm install
-npm run build
+npm run check
 ```
 
-Build harus selesai dengan keterangan halaman ter-prerender tanpa error. Kalau ada error TypeScript, perbaiki dulu. Vercel memakai perintah yang sama, jadi build lokal gagal berarti deploy juga gagal.
+`npm run check` menjalankan pemeriksaan tipe, ESLint, lalu build produksi. Semua harus selesai tanpa error. Vercel memakai perintah build yang sama, jadi build lokal gagal berarti deploy juga gagal.
+
+Untuk memeriksa hasil build seperti di server sungguhan:
+
+```bash
+npm run smoke
+```
+
+Perintah ini menjalankan `next start` sendiri, membuka setiap rute, lalu memastikan semuanya merespons 200, judulnya muncul di HTML awal, halaman 404 memakai desain sendiri, dan berkas `robots.txt`, `sitemap.xml`, serta ikon tersedia.
 
 Catatan untuk proyek ini: jangan menyimpan atau menjalankan build saat file sedang setengah tersunting di editor, karena error setengah jadi mudah muncul. Pastikan semua file sudah tersimpan.
 
@@ -125,10 +133,13 @@ Variabel `NEXT_PUBLIC_` ditanam saat build, jadi wajib redeploy setelah diubah.
 
 ## 10. Checklist sebelum presentasi
 
-1. `npm run build` lokal hijau.
-2. Deploy terakhir berstatus **Ready** di Vercel.
-3. `NEXT_PUBLIC_SITE_URL` sama dengan alamat produksi yang dipakai.
-4. QR di Eco Points sudah dipindai dari ponsel lain dan mengarah ke halaman setor yang benar.
-5. Alur demo utuh berjalan di ponsel nyata: daftar akun, catat setoran, saldo poin bertambah, checkout sampai pesanan berhasil.
-6. Nama mitra bank sampah sudah diganti nama sebenarnya.
-7. Semua tautan yang masih `#` sudah dihapus atau diarahkan.
+1. `npm run check` lokal hijau (tipe, lint, build).
+2. `npm run smoke` melaporkan semua rute lolos.
+3. Deploy terakhir berstatus **Ready** di Vercel.
+4. `NEXT_PUBLIC_SITE_URL` sama dengan alamat produksi yang dipakai.
+5. QR di Eco Points sudah dipindai dari ponsel lain dan mengarah ke halaman setor yang benar.
+6. Alur demo utuh berjalan di ponsel nyata: simpan nomor WhatsApp, pindai QR, catat setoran, saldo poin bertambah, tukar voucher, lalu checkout sampai pesanan berhasil.
+7. Nama mitra bank sampah sudah diganti nama sebenarnya (`lib/situs.ts`, `LOKASI_SETORAN` di `lib/poin.ts`).
+8. Tautan sosial dan halaman legal masih memakai `#`. Ini disengaja sampai akun/halaman resminya ada; ganti `href` di `lib/situs.ts`, dan ganti tautan Kebijakan/Syarat di `components/Footer.tsx` bila sudah siap.
+9. Semua popup dan dialog sudah dicoba di ponsel: Simulasikan Setoran, Tukar Poin, detail motif, dan ubah alamat.
+10. Bila mengganti gambar desain, jalankan `npm run assets` lalu commit hasilnya.
