@@ -1,12 +1,12 @@
-# Panduan Deploy Nusaflo ke Vercel (untuk Pemula)
+# Panduan Deploy Harum Wastra ke Vercel (untuk Pemula)
 
-Panduan ini menuntun dari nol sampai web Nusaflo bisa dibuka publik lewat alamat `https://....vercel.app`, lalu opsional memakai domain sendiri. Ikuti berurutan. Tidak perlu paham server.
+Panduan ini menuntun dari nol sampai web Harum Wastra bisa dibuka publik lewat alamat `https://....vercel.app`, lalu opsional memakai domain sendiri. Ikuti berurutan. Tidak perlu paham server.
 
 ---
 
 ## 0. Yang perlu disiapkan
 
-1. Akun GitHub yang sudah punya akses ke repositori `nusaflo`.
+1. Akun GitHub yang sudah punya akses ke repositori `harum-wastra`.
 2. Akun Vercel. Daftar cukup memakai tombol **Continue with GitHub**, tidak perlu kartu kredit untuk paket gratis (Hobby).
 3. Node.js versi 20 atau lebih baru di komputer (hanya untuk uji build lokal).
 4. Proyek sudah berjalan lokal dengan `npm run dev`.
@@ -15,7 +15,7 @@ Panduan ini menuntun dari nol sampai web Nusaflo bisa dibuka publik lewat alamat
 
 ## 1. Pastikan build lokal bersih
 
-Jalankan di folder proyek (`web-nusaflo`):
+Jalankan di folder proyek (`web-harum-wastra`):
 
 ```bash
 npm install
@@ -44,15 +44,15 @@ Vercel hanya membaca kode yang ada di GitHub, bukan file di laptop.
 ## 3. Impor proyek di Vercel
 
 1. Buka [vercel.com/new](https://vercel.com/new) dan masuk dengan akun GitHub.
-2. Pada daftar **Import Git Repository**, cari `nusaflo`, klik **Import**.
+2. Pada daftar **Import Git Repository**, cari `harum-wastra`, klik **Import**.
 3. Isian yang muncul:
-   - **Project Name**: `nusaflo` (bebas, ini menjadi bagian alamat web).
+   - **Project Name**: `harum-wastra` (bebas, ini menjadi bagian alamat web).
    - **Framework Preset**: biarkan **Next.js** (terdeteksi otomatis).
    - **Root Directory**: biarkan kosong atau `./`. Repositori ini sudah berisi proyek Next.js langsung di akarnya.
    - **Build and Output Settings**: biarkan default (`npm run build`).
 4. Buka bagian **Environment Variables**, tambahkan:
    - **Name**: `NEXT_PUBLIC_SITE_URL`
-   - **Value**: `https://nusaflo.vercel.app` (sesuaikan dengan alamat yang akan didapat; kalau belum tahu, isi sementara lalu perbaiki di langkah 6).
+   - **Value**: `https://harum-wastra.vercel.app` (sesuaikan dengan alamat yang akan didapat; kalau belum tahu, isi sementara lalu perbaiki di langkah 6).
 5. Klik **Deploy** dan tunggu 1 sampai 3 menit.
 
 Selama proses, Vercel menampilkan log build. Bila selesai, akan muncul gambar confetti dan tombol **Visit**.
@@ -83,7 +83,7 @@ Setelah impor, Vercel terhubung ke repositori. Setiap `git push` ke branch `main
 QR di halaman Eco Points memakai `NEXT_PUBLIC_SITE_URL`. Kalau nilai ini salah, QR akan menunjuk ke alamat yang tidak bisa dibuka juri. Caranya:
 
 1. Buka project di Vercel, masuk **Settings**, lalu **Environment Variables**.
-2. Ubah `NEXT_PUBLIC_SITE_URL` menjadi alamat produksi persis, misalnya `https://nusaflo.vercel.app`.
+2. Ubah `NEXT_PUBLIC_SITE_URL` menjadi alamat produksi persis, misalnya `https://harum-wastra.vercel.app`.
 3. Masuk tab **Deployments**, buka deployment teratas, klik menu titik tiga, pilih **Redeploy**.
 
 Variabel `NEXT_PUBLIC_` ditanam saat build, jadi wajib redeploy setelah diubah.
@@ -92,7 +92,7 @@ Variabel `NEXT_PUBLIC_` ditanam saat build, jadi wajib redeploy setelah diubah.
 
 ## 7. Opsional: pakai domain sendiri
 
-1. Beli domain (misalnya `nusaflo.id`) di registrar seperti Rumahweb, Namecheap, atau Cloudflare.
+1. Beli domain (misalnya `harum-wastra.id`) di registrar seperti Rumahweb, Namecheap, atau Cloudflare.
 2. Di Vercel: **Settings**, lalu **Domains**, klik **Add**, masukkan domain.
 3. Vercel menampilkan dua nilai DNS. Di panel registrar, buat:
    - Record `A` untuk `@` menuju `76.76.21.21`, atau ikuti nilai yang ditampilkan Vercel.

@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Harum Wastra
 
-## Getting Started
+Website Harum Wastra: buket bunga lilin aromaterapi dari minyak jelantah bekas, dibungkus kertas batik pilihan. Pengunjung dapat menyetor jelantah, mengumpulkan poin, lalu menukarnya dengan produk.
 
-First, run the development server:
+## Menjalankan proyek
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Perintah
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Perintah | Kegunaan |
+| --- | --- |
+| `npm run dev` | Server pengembangan |
+| `npm run build` | Build produksi |
+| `npm start` | Menjalankan hasil build |
+| `npm run lint` | Pemeriksaan ESLint |
 
-## Learn More
+## Halaman
 
-To learn more about Next.js, take a look at the following resources:
+- `/` — beranda
+- `/katalog` — daftar produk
+- `/produk/[slug]` — detail produk dan pilihan motif
+- `/agenda` — Eco Events
+- `/akun` — Eco Points, setoran, dan voucher
+- `/keranjang` — keranjang dan checkout
+- `/setor` — halaman setor jelantah (target QR)
+- `/pesanan/berhasil` — konfirmasi pesanan
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Teknologi
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Next.js (App Router), React, TypeScript, dan Tailwind CSS v4. Warna serta huruf diatur di `app/globals.css`, logo ada di `components/Logo.tsx`.
 
-## Deploy on Vercel
+## Penyimpanan data
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Keranjang, poin, profil, dan riwayat pesanan disimpan di `localStorage` peramban, jadi data tiap perangkat terpisah dan tidak tersinkron. Pembayaran masih simulasi.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+Panduan langkah demi langkah untuk Vercel ada di [PANDUAN-DEPLOY-VERCEL.md](./PANDUAN-DEPLOY-VERCEL.md).
