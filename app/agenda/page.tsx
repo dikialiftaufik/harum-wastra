@@ -1,37 +1,22 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { acara, type Acara } from "@/lib/data";
+import { GambarLatar } from "@/components/GambarLatar";
+import { MotifTile } from "@/components/MotifTile";
 
 const KATEGORI_ALL = "Semua";
 const KATEGORI_LIST = [KATEGORI_ALL, "Edukasi", "Workshop", "Aksi Lingkungan", "Komunitas"] as const;
 
 export default function Agenda() {
-  const [mounted, setMounted] = useState(false);
   const [activeKategori, setActiveKategori] = useState<string>(KATEGORI_ALL);
   const [selectedEvent, setSelectedEvent] = useState<Acara | null>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const filtered =
     activeKategori === KATEGORI_ALL
       ? acara
       : acara.filter((a) => a.kategori === activeKategori);
-
-  if (!mounted) {
-    return (
-      <div className="min-h-screen bg-cream">
-        <div className="mx-auto max-w-7xl px-5 pt-28 sm:px-8 lg:px-16">
-          <div className="animate-pulse space-y-4">
-            <div className="h-4 w-1/4 rounded bg-ink/10" />
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   if (selectedEvent) {
     return (
@@ -46,14 +31,12 @@ export default function Agenda() {
     <>
       {/* ─── Hero Section ─── */}
       {/* Banner full-bleed memakai komposisi asli aset: sisi kiri sengaja kosong untuk teks */}
-      <section
-        className="eco-events-hero relative flex min-h-[420px] items-center overflow-hidden bg-cream pt-28 pb-20 md:min-h-[520px] md:pt-32 md:pb-24"
-        style={{
-          backgroundImage: "url(/backgrounds/bg-eco-events-hero.png)",
-          backgroundSize: "cover",
-          backgroundPosition: "left center",
-        }}
-      >
+      <section className="eco-events-hero relative flex min-h-[420px] items-center overflow-hidden bg-cream pt-28 pb-20 md:min-h-[520px] md:pt-32 md:pb-24">
+        <GambarLatar
+          src="/backgrounds/bg-eco-events-hero.png"
+          posisi="left center"
+          prioritas
+        />
         <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-16">
           <div className="eco-events-hero-text max-w-xl">
             <p className="eco-events-label font-mono text-xs font-semibold uppercase tracking-[0.25em] text-ink/60">
@@ -77,7 +60,7 @@ export default function Agenda() {
 
       {/* ─── Event Listing Section ─── */}
       <section className="eco-events-listing relative bg-cream pb-16 md:pb-24">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url(/motif/kawung.png)", backgroundSize: "100px", backgroundRepeat: "repeat" }} aria-hidden="true" />
+        <MotifTile id="kawung" ukuran={100} className="opacity-5" />
         <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
           {/* Section Header with Filter */}
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
@@ -99,7 +82,7 @@ export default function Agenda() {
                   onClick={() => setActiveKategori(k)}
                   className={`eco-filter-btn rounded-full border px-5 py-2 text-sm font-medium transition-all duration-300 ${
                     activeKategori === k
-                      ? "border-maroon bg-maroon text-cream shadow-md shadow-maroon/20"
+                      ? "border-maroon bg-maroon text-white shadow-md shadow-maroon/20"
                       : "border-ink/15 bg-white text-ink/70 hover:border-maroon/40 hover:text-maroon"
                   }`}
                 >
@@ -110,40 +93,83 @@ export default function Agenda() {
           </div>
 
           {/* Event Cards Grid */}
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((event, idx) => (
-              <EventCard
-                key={event.id}
-                event={event}
-                index={idx}
-                onClick={() => setSelectedEvent(event)}
-              />
-            ))}
-          </div>
-
-          {/* See All Events Button */}
-          <div className="mt-12 flex justify-center">
-            <button
-              type="button"
-              className="group inline-flex items-center gap-3 rounded-full border border-ink/15 bg-white px-8 py-3.5 text-sm font-medium text-ink/80 transition-all duration-300 hover:border-maroon/40 hover:text-maroon hover:shadow-lg hover:shadow-maroon/5"
-            >
-              Lihat Semua Acara
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="transition-transform duration-300 group-hover:translate-x-1"
+          {filtered.length > 0 ? (
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {filtered.map((event, idx) => (
+                <EventCard
+                  key={event.id}
+                  event={event}
+                  index={idx}
+                  onClick={() => setSelectedEvent(event)}
+                />
+              ))}
+            </div>
+          ) : (
+            /* Empty state: kategori tanpa acara tetap punya tampilan yang utuh */
+            <div className="mt-10 rounded-2xl border border-dashed border-ink/20 bg-white/70 px-6 py-14 text-center">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-maroon/10">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-maroon"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+              </div>
+              <h3 className="mt-4 font-display text-xl font-bold text-ink">
+                Belum ada acara untuk kategori {activeKategori}
+              </h3>
+              <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-ink/65">
+                Acara baru ditambahkan secara berkala. Sementara itu, lihat semua
+                kegiatan yang sedang dibuka.
+              </p>
+              <button
+                type="button"
+                onClick={() => setActiveKategori(KATEGORI_ALL)}
+                className="mt-6 inline-flex items-center gap-2 rounded-full bg-maroon px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-maroon-dark"
               >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </button>
-          </div>
+                Tampilkan semua acara
+              </button>
+            </div>
+          )}
+
+          {/* Reset filter — hanya muncul saat filter aktif */}
+          {activeKategori !== KATEGORI_ALL && filtered.length > 0 && (
+            <div className="mt-12 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setActiveKategori(KATEGORI_ALL)}
+                className="group inline-flex items-center gap-3 rounded-full border border-ink/15 bg-white px-8 py-3.5 text-sm font-medium text-ink/80 transition-all duration-300 hover:border-maroon/40 hover:text-maroon hover:shadow-lg hover:shadow-maroon/5"
+              >
+                Lihat Semua Acara
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </>
@@ -160,23 +186,6 @@ function EventCard({
   index: number;
   onClick: () => void;
 }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (cardRef.current) observer.observe(cardRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   // Category color map
   const kategoriColor: Record<string, string> = {
     Edukasi: "bg-maroon/10 text-maroon",
@@ -186,16 +195,20 @@ function EventCard({
   };
 
   return (
-    <div
-      ref={cardRef}
-      className="eco-event-card group cursor-pointer overflow-hidden rounded-2xl border border-ink/8 bg-white transition-all duration-500 hover:border-maroon/20 hover:shadow-xl hover:shadow-maroon/8"
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0)" : "translateY(30px)",
-        transition: `opacity 0.6s ease-out ${index * 0.15}s, transform 0.6s ease-out ${index * 0.15}s, box-shadow 0.3s ease, border-color 0.3s ease`,
-      }}
-      onClick={onClick}
-    >
+    <div className="reveal-up" style={{ animationDelay: `${index * 0.12}s` }}>
+      <div
+        role="button"
+        tabIndex={0}
+        aria-label={`Lihat detail dan daftar acara ${event.judul}`}
+        className="eco-event-card group h-full cursor-pointer overflow-hidden rounded-2xl border border-ink/8 bg-white hover:border-maroon/20 hover:shadow-xl focus-visible:border-maroon/40"
+        onClick={onClick}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onClick();
+          }
+        }}
+      >
       {/* Image Container */}
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
@@ -293,7 +306,7 @@ function EventCard({
 
         {/* Arrow CTA */}
         <div className="mt-5 flex items-center justify-end">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-maroon text-cream transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-maroon/30">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-maroon text-white transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-maroon/30">
             <svg
               width="16"
               height="16"
@@ -310,6 +323,7 @@ function EventCard({
             </svg>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
@@ -344,7 +358,7 @@ function EventRegistration({
       {/* ─── Hero Banner ─── */}
       <section className="eco-events-hero relative overflow-hidden bg-cream pt-24 pb-10 md:pt-28 md:pb-14">
         <div className="absolute inset-0 bg-gradient-to-b from-cream/95 via-cream/90 to-cream/60" />
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "url(/motif/truntum.png)", backgroundSize: "100px", backgroundRepeat: "repeat" }} aria-hidden="true" />
+        <MotifTile id="truntum" ukuran={100} className="opacity-10" />
         <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
           <p className="eco-events-label font-mono text-xs font-semibold uppercase tracking-[0.25em] text-ink/60">
             PENDAFTARAN ACARA
@@ -363,8 +377,9 @@ function EventRegistration({
       </section>
 
       {/* ─── Form + Event Detail ─── */}
-      <section className="relative pb-16 md:pb-24" style={{ backgroundImage: "url(/backgrounds/bg-eco-points-and-events.png)", backgroundSize: "cover", backgroundPosition: "top center" }}>
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url(/motif/kawung.png)", backgroundSize: "100px", backgroundRepeat: "repeat" }} aria-hidden="true" />
+      <section className="relative pb-16 md:pb-24">
+        <GambarLatar src="/backgrounds/bg-eco-points-and-events.png" posisi="top center" />
+        <MotifTile id="kawung" ukuran={100} className="opacity-5" />
         <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
             {/* Left: Registration Form */}
@@ -400,7 +415,7 @@ function EventRegistration({
                     <button
                       type="button"
                       onClick={onBack}
-                      className="mt-6 inline-flex items-center gap-2 rounded-full bg-maroon px-6 py-3 text-sm font-medium text-cream transition-all duration-300 hover:bg-maroon-dark"
+                      className="mt-6 inline-flex items-center gap-2 rounded-full bg-maroon px-6 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-maroon-dark"
                     >
                       <svg
                         width="16"
@@ -421,7 +436,10 @@ function EventRegistration({
                     {/* Name + Phone */}
                     <div className="grid gap-5 sm:grid-cols-2">
                       <div>
-                        <label className="mb-1.5 block text-sm font-medium text-ink">
+                        <label
+                          htmlFor="daftar-nama"
+                          className="mb-1.5 block text-sm font-medium text-ink"
+                        >
                           Nama lengkap{" "}
                           <span className="text-red-500">*</span>
                         </label>
@@ -439,8 +457,10 @@ function EventRegistration({
                             <circle cx="12" cy="7" r="4" />
                           </svg>
                           <input
+                            id="daftar-nama"
                             type="text"
                             required
+                            autoComplete="name"
                             placeholder="Masukkan nama lengkap Anda"
                             value={formData.nama}
                             onChange={(e) =>
@@ -454,7 +474,10 @@ function EventRegistration({
                         </div>
                       </div>
                       <div>
-                        <label className="mb-1.5 block text-sm font-medium text-ink">
+                        <label
+                          htmlFor="daftar-telepon"
+                          className="mb-1.5 block text-sm font-medium text-ink"
+                        >
                           Nomor telepon{" "}
                           <span className="text-red-500">*</span>
                         </label>
@@ -471,8 +494,10 @@ function EventRegistration({
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                           </svg>
                           <input
+                            id="daftar-telepon"
                             type="tel"
                             required
+                            autoComplete="tel"
                             placeholder="Contoh: 0812 3456 7890"
                             value={formData.telepon}
                             onChange={(e) =>
@@ -490,7 +515,10 @@ function EventRegistration({
                     {/* Email + Jumlah Peserta */}
                     <div className="grid gap-5 sm:grid-cols-2">
                       <div>
-                        <label className="mb-1.5 block text-sm font-medium text-ink">
+                        <label
+                          htmlFor="daftar-email"
+                          className="mb-1.5 block text-sm font-medium text-ink"
+                        >
                           Email <span className="text-red-500">*</span>
                         </label>
                         <div className="relative">
@@ -507,8 +535,10 @@ function EventRegistration({
                             <polyline points="22,6 12,13 2,6" />
                           </svg>
                           <input
+                            id="daftar-email"
                             type="email"
                             required
+                            autoComplete="email"
                             placeholder="nama@contoh.com"
                             value={formData.email}
                             onChange={(e) =>
@@ -522,7 +552,10 @@ function EventRegistration({
                         </div>
                       </div>
                       <div>
-                        <label className="mb-1.5 block text-sm font-medium text-ink">
+                        <label
+                          htmlFor="daftar-peserta"
+                          className="mb-1.5 block text-sm font-medium text-ink"
+                        >
                           Jumlah peserta{" "}
                           <span className="text-red-500">*</span>
                         </label>
@@ -542,6 +575,7 @@ function EventRegistration({
                             <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                           </svg>
                           <select
+                            id="daftar-peserta"
                             value={formData.jumlahPeserta}
                             onChange={(e) =>
                               setFormData((s) => ({
@@ -574,7 +608,10 @@ function EventRegistration({
 
                     {/* Domisili */}
                     <div>
-                      <label className="mb-1.5 block text-sm font-medium text-ink">
+                      <label
+                        htmlFor="daftar-domisili"
+                        className="mb-1.5 block text-sm font-medium text-ink"
+                      >
                         Domisili <span className="text-red-500">*</span>
                       </label>
                       <div className="relative">
@@ -591,6 +628,7 @@ function EventRegistration({
                           <circle cx="12" cy="10" r="3" />
                         </svg>
                         <select
+                          id="daftar-domisili"
                           required
                           value={formData.domisili}
                           onChange={(e) =>
@@ -627,7 +665,10 @@ function EventRegistration({
 
                     {/* Catatan */}
                     <div>
-                      <label className="mb-1.5 block text-sm font-medium text-ink">
+                      <label
+                        htmlFor="daftar-catatan"
+                        className="mb-1.5 block text-sm font-medium text-ink"
+                      >
                         Catatan
                       </label>
                       <div className="relative">
@@ -646,6 +687,7 @@ function EventRegistration({
                           <line x1="16" y1="17" x2="8" y2="17" />
                         </svg>
                         <textarea
+                          id="daftar-catatan"
                           rows={3}
                           maxLength={300}
                           placeholder="Tulis catatan tambahan (opsional)"
@@ -727,7 +769,7 @@ function EventRegistration({
                       </button>
                       <button
                         type="submit"
-                        className="group inline-flex items-center justify-center gap-2 rounded-full bg-maroon px-6 py-3.5 text-sm font-semibold text-cream transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/25"
+                        className="group inline-flex items-center justify-center gap-2 rounded-full bg-maroon px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/25"
                       >
                         Daftar Acara
                         <svg
