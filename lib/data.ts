@@ -137,6 +137,15 @@ export function formatRupiah(n: number): string {
   return "Rp" + n.toLocaleString("id-ID");
 }
 
+/**
+ * Ubah path motif PNG (`/motif/kawung.png`) menjadi tile WebP kecil
+ * (`/motif-tile/kawung.webp`) yang dipakai untuk pola berulang.
+ */
+export function tileMotif(path: string): string {
+  const nama = path.split("/").pop()?.replace(/\.[a-z0-9]+$/i, "") ?? "";
+  return `/motif-tile/${nama}.webp`;
+}
+
 export type Acara = {
   id: string;
   judul: string;

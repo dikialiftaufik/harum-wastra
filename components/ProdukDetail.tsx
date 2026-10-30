@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motif, produk, formatRupiah, type Produk, type Motif } from "@/lib/data";
 import { tambahKeKeranjang } from "@/lib/keranjang";
+import { bacaUlasan, tambahUlasan, type Ulasan } from "@/lib/ulasan";
 
 export function ProdukDetail({ produk: p }: { produk: Produk }) {
   const [aktifId, setAktifId] = useState<string>(motif[0].id);
@@ -13,6 +14,41 @@ export function ProdukDetail({ produk: p }: { produk: Produk }) {
   const [qty, setQty] = useState(1);
   const [activeTab, setActiveTab] = useState("deskripsi");
   const aktif: Motif = motif.find((m) => m.id === aktifId) ?? motif[0];
+
+  /* ─── Ulasan pembeli (tersimpan di peramban ini) ─── */
+  const [daftarUlasan, setDaftarUlasan] = useState<Ulasan[]>([]);
+  const [formUlasan, setFormUlasan] = useState({
+    nama: "",
+    rating: 5,
+    komentar: "",
+  });
+  const [galatUlasan, setGalatUlasan] = useState("");
+
+  useEffect(() => {
+    setDaftarUlasan(bacaUlasan(p.slug));
+  }, [p.slug]);
+
+  function kirimUlasan(e: React.FormEvent) {
+    e.preventDefault();
+    if (formUlasan.nama.trim().length < 2) {
+      setGalatUlasan("Isi nama Anda minimal 2 huruf.");
+      return;
+    }
+    if (formUlasan.komentar.trim().length < 5) {
+      setGalatUlasan("Tulis ulasan minimal 5 karakter.");
+      return;
+    }
+    tambahUlasan({
+      slug: p.slug,
+      nama: formUlasan.nama.trim(),
+      rating: formUlasan.rating,
+      komentar: formUlasan.komentar.trim(),
+    });
+    setDaftarUlasan(bacaUlasan(p.slug));
+    setFormUlasan({ nama: "", rating: 5, komentar: "" });
+    setGalatUlasan("");
+  }
+
 
   // Thumbnail scroll ref
   const thumbRef = useRef<HTMLDivElement>(null);
@@ -81,7 +117,7 @@ export function ProdukDetail({ produk: p }: { produk: Produk }) {
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
           <div className="grid gap-10 md:grid-cols-2 md:gap-14 lg:gap-16">
             {/* Left - Image gallery */}
-            <div className="space-y-4">
+            <div className="min-w-0 space-y-4">
               {/* Main image with navigation arrows */}
               <div className="group relative aspect-[4/3] overflow-hidden rounded-2xl bg-white">
                 <Image
@@ -148,7 +184,7 @@ export function ProdukDetail({ produk: p }: { produk: Produk }) {
 
                 <div
                   ref={thumbRef}
-                  className="flex gap-2 overflow-x-auto scrollbar-hide"
+                  className="flex min-w-0 flex-1 gap-2 overflow-x-auto scrollbar-hide"
                 >
                   {p.gambarGaleri.map((g, i) => (
                     <button
@@ -189,7 +225,7 @@ export function ProdukDetail({ produk: p }: { produk: Produk }) {
             </div>
 
             {/* Right - Product info */}
-            <div className="flex flex-col">
+            <div className="flex min-w-0 flex-col">
               {/* Title */}
               <h1 className="font-display text-3xl text-maroon sm:text-4xl italic">
                 {p.nama}
@@ -204,8 +240,8 @@ export function ProdukDetail({ produk: p }: { produk: Produk }) {
                       width="18"
                       height="18"
                       viewBox="0 0 24 24"
-                      fill={star <= Math.floor(p.rating) ? "#7b212e" : "none"}
-                      stroke="#7b212e"
+                      fill={star <= Math.floor(p.rating) ? "#096D73" : "none"}
+                      stroke="#096D73"
                       strokeWidth="1.5"
                     >
                       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -258,11 +294,14 @@ export function ProdukDetail({ produk: p }: { produk: Produk }) {
                             : "border-ink/10 hover:border-maroon/40"
                         }`}
                       >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        {/* Memakai <Image> supaya PNG motif 2 MB tidak terunduh
+                            utuh hanya untuk thumbnail 56px. */}
+                        <Image
                           src={m.gambar}
                           alt=""
-                          className="h-full w-full object-cover"
+                          fill
+                          sizes="64px"
+                          className="object-cover"
                         />
                       </div>
                       <span
@@ -320,7 +359,7 @@ export function ProdukDetail({ produk: p }: { produk: Produk }) {
                   <button
                     type="button"
                     onClick={tambah}
-                    className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-maroon px-8 py-3 text-sm font-semibold text-cream transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20 sm:w-auto"
+                    className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-maroon px-8 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-maroon-dark hover:shadow-lg hover:shadow-maroon/20 sm:w-auto"
                   >
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="8" cy="21" r="1" />
@@ -442,21 +481,180 @@ export function ProdukDetail({ produk: p }: { produk: Produk }) {
             )}
 
             {activeTab === "ulasan" && (
-              <div className="max-w-2xl">
-                <div className="flex items-center gap-4 rounded-xl border border-ink/8 bg-white p-5">
-                  <p className="font-display text-4xl font-bold text-maroon">{p.rating.toFixed(1)}</p>
-                  <div>
-                    <div className="flex gap-0.5">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <svg key={star} width="16" height="16" viewBox="0 0 24 24" fill="#7b212e" stroke="#7b212e" strokeWidth="1.5">
-                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                        </svg>
+              <div className="grid gap-8 md:grid-cols-2">
+                {/* Ringkasan + daftar ulasan */}
+                <div>
+                  <div className="flex items-center gap-4 rounded-xl border border-ink/8 bg-white p-5">
+                    <p className="font-display text-4xl font-bold text-maroon">{p.rating.toFixed(1)}</p>
+                    <div>
+                      <div className="flex gap-0.5">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <svg key={star} width="16" height="16" viewBox="0 0 24 24" fill="#096D73" stroke="#096D73" strokeWidth="1.5" aria-hidden="true">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                          </svg>
+                        ))}
+                      </div>
+                      <p className="mt-1 text-sm text-ink/60">{p.ulasan}+ ulasan dari pembeli</p>
+                    </div>
+                  </div>
+
+                  {daftarUlasan.length === 0 ? (
+                    <div className="mt-4 rounded-xl border border-dashed border-ink/20 bg-white/60 p-5 text-center">
+                      <p className="text-sm font-semibold text-ink">
+                        Belum ada ulasan untuk produk ini
+                      </p>
+                      <p className="mt-1 text-xs leading-relaxed text-ink/60">
+                        Ulasan yang Anda kirim akan tampil di sini dan tersimpan
+                        di peramban ini.
+                      </p>
+                    </div>
+                  ) : (
+                    <ul className="mt-4 space-y-3">
+                      {daftarUlasan.map((u) => (
+                        <li
+                          key={u.id}
+                          className="rounded-xl border border-ink/8 bg-white p-4"
+                        >
+                          <div className="flex items-center justify-between gap-3">
+                            <p className="text-sm font-semibold text-ink">
+                              {u.nama}
+                            </p>
+                            <div className="flex gap-0.5" aria-label={`${u.rating} dari 5 bintang`}>
+                              {[1, 2, 3, 4, 5].map((star) => (
+                                <svg
+                                  key={star}
+                                  width="12"
+                                  height="12"
+                                  viewBox="0 0 24 24"
+                                  fill={star <= u.rating ? "#096D73" : "none"}
+                                  stroke="#096D73"
+                                  strokeWidth="1.5"
+                                  aria-hidden="true"
+                                >
+                                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                </svg>
+                              ))}
+                            </div>
+                          </div>
+                          <p className="mt-2 text-sm leading-relaxed text-ink/70">
+                            {u.komentar}
+                          </p>
+                          <p className="mt-2 text-xs text-ink/50">
+                            {new Date(u.waktu).toLocaleDateString("id-ID", {
+                              dateStyle: "medium",
+                            })}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+
+                {/* Formulir ulasan */}
+                <form
+                  onSubmit={kirimUlasan}
+                  noValidate
+                  className="h-fit rounded-xl border border-ink/8 bg-white p-5"
+                >
+                  <h3 className="font-display text-lg font-bold text-ink">
+                    Tulis ulasan Anda
+                  </h3>
+                  <p className="mt-1 text-xs text-ink/60">
+                    Ulasan disimpan di peramban ini untuk keperluan demo.
+                  </p>
+
+                  <div className="mt-4">
+                    <label
+                      htmlFor="ulasan-nama"
+                      className="mb-1 block text-sm font-medium text-ink"
+                    >
+                      Nama
+                    </label>
+                    <input
+                      id="ulasan-nama"
+                      value={formUlasan.nama}
+                      onChange={(e) =>
+                        setFormUlasan((s) => ({ ...s, nama: e.target.value }))
+                      }
+                      placeholder="Nama Anda"
+                      maxLength={40}
+                      className="w-full rounded-xl border border-ink/15 bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-ink/40 focus:border-maroon/50 focus:outline-none focus:ring-2 focus:ring-maroon/10"
+                    />
+                  </div>
+
+                  <fieldset className="mt-4">
+                    <legend className="mb-1 text-sm font-medium text-ink">
+                      Penilaian
+                    </legend>
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4, 5].map((nilai) => (
+                        <button
+                          key={nilai}
+                          type="button"
+                          onClick={() =>
+                            setFormUlasan((s) => ({ ...s, rating: nilai }))
+                          }
+                          aria-label={`Beri ${nilai} bintang`}
+                          aria-pressed={formUlasan.rating === nilai}
+                          className="rounded p-0.5 transition-transform hover:scale-110"
+                        >
+                          <svg
+                            width="26"
+                            height="26"
+                            viewBox="0 0 24 24"
+                            fill={nilai <= formUlasan.rating ? "#096D73" : "none"}
+                            stroke="#096D73"
+                            strokeWidth="1.5"
+                            aria-hidden="true"
+                          >
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                          </svg>
+                        </button>
                       ))}
                     </div>
-                    <p className="mt-1 text-sm text-ink/50">{p.ulasan}+ ulasan dari pembeli</p>
+                  </fieldset>
+
+                  <div className="mt-4">
+                    <label
+                      htmlFor="ulasan-komentar"
+                      className="mb-1 block text-sm font-medium text-ink"
+                    >
+                      Ulasan
+                    </label>
+                    <textarea
+                      id="ulasan-komentar"
+                      rows={4}
+                      maxLength={400}
+                      value={formUlasan.komentar}
+                      onChange={(e) =>
+                        setFormUlasan((s) => ({ ...s, komentar: e.target.value }))
+                      }
+                      placeholder="Ceritakan pengalaman Anda"
+                      aria-invalid={Boolean(galatUlasan)}
+                      aria-describedby={galatUlasan ? "ulasan-galat" : undefined}
+                      className={`w-full resize-none rounded-xl border bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 ${
+                        galatUlasan
+                          ? "border-red-400 focus:border-red-500 focus:ring-red-100"
+                          : "border-ink/15 focus:border-maroon/50 focus:ring-maroon/10"
+                      }`}
+                    />
+                    <div className="mt-1 flex items-center justify-between gap-3">
+                      <p id="ulasan-galat" aria-live="polite" className="text-xs text-red-600">
+                        {galatUlasan}
+                      </p>
+                      <span className="text-xs text-ink/45">
+                        {formUlasan.komentar.length}/400
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <p className="mt-4 text-sm italic text-ink/40">Fitur ulasan lengkap akan segera hadir.</p>
+
+                  <button
+                    type="submit"
+                    className="mt-4 w-full rounded-full bg-maroon px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-maroon-dark"
+                  >
+                    Kirim ulasan
+                  </button>
+                </form>
               </div>
             )}
 
@@ -553,12 +751,15 @@ export function ProdukDetail({ produk: p }: { produk: Produk }) {
                         {r.ringkas}
                       </p>
                       <p className="font-display text-lg font-bold text-maroon">
-                        1 kelopak = {(r.harga / 1000).toFixed(0)}k
+                        {formatRupiah(r.harga)}{" "}
+                        <span className="font-body text-xs font-normal text-ink/55">
+                          / {r.satuan}
+                        </span>
                       </p>
                     </div>
 
                     {/* Arrow button */}
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-maroon text-cream transition-all duration-300 group-hover:bg-maroon-dark group-hover:shadow-lg">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-maroon text-white transition-all duration-300 group-hover:bg-maroon-dark group-hover:shadow-lg">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12" />
                         <polyline points="12 5 19 12 12 19" />
