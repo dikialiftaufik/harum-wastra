@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Suspense } from "react";
 import { Tahun } from "./Tahun";
+import { Logo } from "./Logo";
 
 export function Footer() {
   return (
@@ -33,14 +34,9 @@ export function Footer() {
           <div className="grid gap-12 md:grid-cols-12">
             {/* Col 1 - Logo and description */}
             <div className="md:col-span-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/logo-nusaflo-alt.png"
-                alt="Nusaflo"
-                className="h-14 w-auto object-contain"
-              />
+              <Logo nada="cream" ukuran="lg" />
               <p className="mt-5 max-w-xs text-sm leading-relaxed text-cream/75">
-                Nusaflo menghadirkan perubahan nyata melalui ekonomi sirkular,
+                Harum Wastra menghadirkan perubahan nyata melalui ekonomi sirkular,
                 dengan mengolah minyak jelantah menjadi hadiah bermakna bagi
                 Anda dan lingkungan yang lebih baik.
               </p>
@@ -178,7 +174,7 @@ export function Footer() {
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                     <polyline points="22,6 12,13 2,6" />
                   </svg>
-                  halo@nusaflo.id
+                  halo@harumwastra.id
                 </li>
                 <li className="flex items-center gap-3">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="shrink-0">
@@ -192,13 +188,13 @@ export function Footer() {
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                     <circle cx="12" cy="10" r="3" />
                   </svg>
-                  <span>Nusaflo Creative Space,<br />Bandung</span>
+                  <span>Harum Wastra Creative Space,<br />Bandung</span>
                 </li>
               </ul>
 
               {/* Newsletter */}
               <p className="mt-6 font-display text-sm font-bold text-cream">
-                Dapatkan kabar terbaru dari Nusaflo
+                Dapatkan kabar terbaru dari Harum Wastra
               </p>
               <div className="mt-3 flex items-center gap-2">
                 <div className="relative flex-1">
@@ -231,19 +227,19 @@ export function Footer() {
 
           {/* Bottom bar */}
           <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-cream/15 pt-6 sm:flex-row">
-            <p className="text-xs text-cream/55">
+            <div className="text-xs text-cream/55">
               <Suspense
                 fallback={
                   <p className="text-xs text-cream/55">
-                    © Nusaflo. Semua hak dilindungi.
+                    © Harum Wastra. Semua hak dilindungi.
                   </p>
                 }
               >
                 <p className="text-xs text-cream/55">
-                  © <Tahun /> Nusaflo. Semua hak dilindungi.
+                  © <Tahun /> Harum Wastra. Semua hak dilindungi.
                 </p>
               </Suspense>
-            </p>
+            </div>
             <div className="flex items-center gap-6">
               <span className="hidden h-5 w-px bg-cream/20 sm:block" />
               <Link href="#" className="text-xs text-cream/55 transition-colors hover:text-cream">

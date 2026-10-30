@@ -13,9 +13,9 @@ export const POIN_PER_LITER = 1000;
 export const RUPIAH_PER_POIN = 10;
 export const LOKASI_SETORAN = "Bank Sampah Mitra Bandung";
 
-const KUNCI_PROFIL = "nusaflo-profil";
-const KUNCI_SETORAN = "nusaflo-setoran";
-const KUNCI_SALDO = "nusaflo-poin-saldo";
+const KUNCI_PROFIL = "harum-wastra-profil";
+const KUNCI_SETORAN = "harum-wastra-setoran";
+const KUNCI_SALDO = "harum-wastra-poin-saldo";
 
 function baca<T>(kunci: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;

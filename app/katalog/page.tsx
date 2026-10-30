@@ -26,12 +26,12 @@ export default function Katalog() {
 
   return (
     <>
-      {/* ─── Koleksi Nusaflo Section ─── */}
+      {/* ─── Koleksi Harum Wastra Section ─── */}
       <section className="katalog-section bg-cream pt-24 pb-16 md:pt-28 md:pb-20">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-16">
           {/* Section label */}
           <p className="katalog-label font-mono text-xs font-semibold uppercase tracking-[0.25em] text-ink/60">
-            KOLEKSI NUSAFLO
+            KOLEKSI HARUM WASTRA
           </p>
 
           {/* Product cards - 2 columns */}
@@ -61,7 +61,7 @@ export default function Katalog() {
                 Koleksi motif batik
               </h2>
               <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink/60">
-                Setiap pembungkus Nusaflo menggunakan motif batik pilihan yang
+                Setiap pembungkus Harum Wastra menggunakan motif batik pilihan yang
                 kaya makna. Temukan motif yang paling sesuai dengan cerita dan
                 momen spesial Anda.
               </p>

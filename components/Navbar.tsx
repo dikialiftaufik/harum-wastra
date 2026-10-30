@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { Logo } from "@/components/Logo";
 
 const tautan = [
   { href: "/", label: "Beranda", exact: true },
@@ -24,12 +25,7 @@ export function Navbar() {
           className="flex items-center gap-2.5"
           onClick={() => setBuka(false)}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo-nusaflo.png"
-            alt="Logo Nusaflo"
-            className="h-9 w-auto object-contain"
-          />
+          <Logo />
         </Link>
 
         {/* Desktop Navigation - centered */}

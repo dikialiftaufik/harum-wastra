@@ -16,7 +16,7 @@ export type Pesanan = {
   total: number;
 };
 
-const KUNCI = "nusaflo-pesanan-terakhir";
+const KUNCI = "harum-wastra-pesanan-terakhir";
 
 export function buatNomor(): string {
   const d = new Date();
@@ -25,7 +25,7 @@ export function buatNomor(): string {
     String(d.getMonth() + 1).padStart(2, "0") +
     String(d.getDate()).padStart(2, "0");
   const acak = Math.floor(1000 + Math.random() * 9000);
-  return `NF-${ymd}-${acak}`;
+  return `HW-${ymd}-${acak}`;
 }
 
 export function simpanPesanan(p: Pesanan) {

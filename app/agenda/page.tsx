@@ -67,7 +67,7 @@ export default function Agenda() {
               untuk lingkungan
             </h1>
             <p className="eco-events-desc mt-6 max-w-lg text-base leading-relaxed text-ink/70">
-              Ikuti berbagai kegiatan Nusaflo yang mengajak kita untuk lebih
+              Ikuti berbagai kegiatan Harum Wastra yang mengajak kita untuk lebih
               peduli pada bumi melalui edukasi, workshop, dan aksi nyata
               bersama komunitas.
             </p>

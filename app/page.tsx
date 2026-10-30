@@ -96,13 +96,13 @@ export default function Beranda() {
         </div>
       </section>
 
-      {/* ─── Mengapa Nusaflo ─── */}
+      {/* ─── Mengapa Harum Wastra ─── */}
       <section className="mengapa-section relative overflow-hidden reveal-up">
         {/* Full background image */}
         <div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url(/backgrounds/bg-beranda-mengapa-nusaflo.png)",
+            backgroundImage: "url(/backgrounds/bg-beranda-mengapa-harum-wastra.png)",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -113,7 +113,7 @@ export default function Beranda() {
           {/* Section header - centered */}
           <div className="mx-auto max-w-3xl text-center">
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.3em] text-maroon">
-              Mengapa Nusaflo?
+              Mengapa Harum Wastra?
             </p>
             <h2 className="mt-5 font-display text-[2.4rem] leading-[1.15] text-ink sm:text-5xl lg:text-[3.2rem]">
               Pilihan sederhana,
@@ -121,7 +121,7 @@ export default function Beranda() {
               <span className="text-maroon">dampak yang lebih luas</span>
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-ink/70">
-              Nusaflo hadir untuk menghubungkan niat baik Anda di dapur
+              Harum Wastra hadir untuk menghubungkan niat baik Anda di dapur
               dengan hadiah yang bermakna, sekaligus lingkungan yang lebih bersih.
             </p>
           </div>
@@ -381,7 +381,7 @@ export default function Beranda() {
                   </h3>
                 </div>
                 <p className="text-sm leading-relaxed text-ink/65">
-                  Gunakan poin untuk menukar hadiah Nusaflo. Lilinnya dapat dicabut, sementara pembungkus batik dan tatakannya tetap bernilai dan bisa digunakan kembali.
+                  Gunakan poin untuk menukar hadiah Harum Wastra. Lilinnya dapat dicabut, sementara pembungkus batik dan tatakannya tetap bernilai dan bisa digunakan kembali.
                 </p>
               </div>
             </div>

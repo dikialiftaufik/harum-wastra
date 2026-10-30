@@ -79,7 +79,7 @@ const VOUCHERS = [
     id: 1,
     icon: "percent",
     title: "Voucher Diskon 10%",
-    desc: "Dapatkan diskon 10% untuk semua produk Nusaflo.",
+    desc: "Dapatkan diskon 10% untuk semua produk Harum Wastra.",
     poin: "5.000 Poin",
   },
   {
@@ -93,7 +93,7 @@ const VOUCHERS = [
     id: 3,
     icon: "ongkir",
     title: "Gratis Ongkir",
-    desc: "Voucher gratis ongkir untuk pembelian di website Nusaflo.",
+    desc: "Voucher gratis ongkir untuk pembelian di website Harum Wastra.",
     poin: "7.500 Poin",
   },
 ];
@@ -453,7 +453,7 @@ export default function EcoPoints() {
               {/* Description */}
               <p className="eco-points-desc mt-5 max-w-[520px] text-[0.95rem] leading-[1.75] text-ink/70">
                 Scan QR melalui website, masukkan jumlah liter jelantah Anda,
-                dan lihat estimasi poin yang akan ditambahkan ke akun Nusaflo
+                dan lihat estimasi poin yang akan ditambahkan ke akun Harum Wastra
                 Anda.
               </p>
 
@@ -748,7 +748,7 @@ export default function EcoPoints() {
               </div>
               <p className="mt-3 text-sm text-ink/60">
                 Berikut adalah riwayat setoran minyak jelantah Anda terbaru di
-                bank sampah mitra Nusaflo.
+                bank sampah mitra Harum Wastra.
               </p>
 
               {/* Table header */}
@@ -815,7 +815,7 @@ export default function EcoPoints() {
                 </button>
               </div>
               <p className="mt-3 text-sm text-ink/60">
-                Tukar poin Anda dengan berbagai voucher menarik dari Nusaflo dan
+                Tukar poin Anda dengan berbagai voucher menarik dari Harum Wastra dan
                 mitra kami.
               </p>
 
@@ -885,7 +885,7 @@ export default function EcoPoints() {
                   <p className="mt-0.5 text-xs leading-relaxed text-ink/60">
                     Voucher yang tersedia dapat berubah sewaktu-waktu. Voucher
                     akan dikirim ke akun Anda dan dapat digunakan saat checkout
-                    di website Nusaflo.
+                    di website Harum Wastra.
                   </p>
                 </div>
               </div>

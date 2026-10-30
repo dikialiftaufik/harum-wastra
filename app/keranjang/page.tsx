@@ -9,6 +9,7 @@ import {
   ubahQty,
   hapusItem,
   totalKeranjang,
+  kosongkanKeranjang,
   type ItemKeranjang,
 } from "@/lib/keranjang";
 import { formatRupiah } from "@/lib/data";
@@ -187,7 +188,7 @@ export default function Keranjang() {
       total,
     };
     simpanPesanan(pesanan);
-    localStorage.removeItem("nusaflo-keranjang");
+    kosongkanKeranjang();
     router.push("/pesanan/berhasil");
   }
 
@@ -472,7 +473,7 @@ export default function Keranjang() {
                         </button>
                       </div>
                       <p className="text-xs text-ink/50 mt-3 mb-0.5">Atas Nama</p>
-                      <p className="text-sm font-semibold text-ink">PT Nusaflo Indonesia</p>
+                      <p className="text-sm font-semibold text-ink">PT Harum Wastra Indonesia</p>
                     </div>
                   </div>
                 </div>
@@ -483,7 +484,7 @@ export default function Keranjang() {
                   <div>
                     <p className="text-sm font-semibold text-maroon">Ini masih simulasi pembayaran</p>
                     <p className="text-sm text-ink/60 mt-1 leading-relaxed">
-                      Setelah Anda mengonfirmasi pembayaran, tim Nusaflo akan memverifikasi
+                      Setelah Anda mengonfirmasi pembayaran, tim Harum Wastra akan memverifikasi
                       secara manual dan melanjutkan proses pesanan melalui WhatsApp.
                     </p>
                   </div>
@@ -615,7 +616,7 @@ export default function Keranjang() {
                     <div>
                       <p className="text-sm font-semibold text-maroon">Dampak baik dari pesanan ini</p>
                       <p className="text-xs text-ink/60 mt-1 leading-relaxed">
-                        Setiap pembelian Nusaflo mendukung pengelolaan minyak jelantah dan
+                        Setiap pembelian Harum Wastra mendukung pengelolaan minyak jelantah dan
                         mengurangi sampah plastik menjadi hadiah yang bernilai.
                       </p>
                     </div>

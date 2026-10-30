@@ -87,9 +87,9 @@ export const produk: Produk[] = [
     deskripsiKatalog:
       "Rangkaian lilin aromaterapi berbentuk bunga yang dibungkus kertas batik dan dilengkapi tatakan bernilai guna. Hadiah istimewa yang indah, harum, dan lebih ramah lingkungan.",
     deskripsiDetail: [
-      "Buket Lilin Aromaterapi dari Nusaflo adalah perpaduan keindahan, keharuman, dan makna dalam satu hadiah istimewa.",
+      "Buket Lilin Aromaterapi dari Harum Wastra adalah perpaduan keindahan, keharuman, dan makna dalam satu hadiah istimewa.",
       "Setiap rangkaian berisi lilin aromaterapi berbentuk bunga yang dibuat dengan detail, menghadirkan kehangatan dan aroma menenangkan untuk berbagai momen spesial. Dibungkus dengan kertas batik pilihan yang elegan, buket ini tidak hanya cantik untuk diberikan, tetapi juga lebih ramah lingkungan karena pembungkusnya dapat digunakan kembali.",
-      "Cocok untuk hadiah ulang tahun, ucapan terima kasih, anniversary, atau sekadar tanda perhatian untuk orang tersayang. Nusaflo percaya bahwa hadiah yang indah seharusnya juga membawa kebaikan bagi penerima dan lingkungan.",
+      "Cocok untuk hadiah ulang tahun, ucapan terima kasih, anniversary, atau sekadar tanda perhatian untuk orang tersayang. Harum Wastra percaya bahwa hadiah yang indah seharusnya juga membawa kebaikan bagi penerima dan lingkungan.",
     ],
     gambar: "/graphics/product.png",
     gambarGaleri: [
@@ -115,7 +115,7 @@ export const produk: Produk[] = [
     deskripsiKatalog:
       "Souvenir lilin aromaterapi dengan kemasan batik yang elegan dan dapat digunakan kembali. Pilihan tepat untuk acara spesial, sebagai tanda terima kasih yang berkesan dan berkelanjutan.",
     deskripsiDetail: [
-      "Souvenir Lilin Aromaterapi dari Nusaflo hadir sebagai pilihan hadiah yang elegan dan bermakna.",
+      "Souvenir Lilin Aromaterapi dari Harum Wastra hadir sebagai pilihan hadiah yang elegan dan bermakna.",
       "Setiap kelopak lilin dibuat dengan cermat dari minyak jelantah yang telah diproses, menghasilkan aroma yang menenangkan dan bentuk yang indah. Dikemas dengan kertas batik pilihan yang dapat digunakan kembali.",
       "Cocok untuk souvenir pernikahan, ulang tahun, atau acara spesial lainnya. Cantik, harum, dan bermakna.",
     ],
@@ -162,7 +162,7 @@ export const acara: Acara[] = [
     tanggalHari: "18",
     tanggalBulan: "Nov 2026",
     tanggalLengkap: "18 Nov 2026",
-    lokasi: "Rumah Kreatif Nusaflo",
+    lokasi: "Rumah Kreatif Harum Wastra",
     waktu: "14.00 – 16.00 WIB",
     kuota: "30 peserta",
     biaya: "Gratis",
@@ -180,7 +180,7 @@ export const acara: Acara[] = [
     tanggalHari: "25",
     tanggalBulan: "Nov 2026",
     tanggalLengkap: "25 Nov 2026",
-    lokasi: "Studio Nusaflo",
+    lokasi: "Studio Harum Wastra",
     waktu: "13.00 – 16.00 WIB",
     kuota: "20 peserta",
     biaya: "Gratis",

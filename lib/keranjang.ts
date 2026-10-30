@@ -10,7 +10,7 @@ export type ItemKeranjang = {
   pita: string;
 };
 
-const KUNCI = "nusaflo-keranjang";
+const KUNCI = "harum-wastra-keranjang";
 
 export function bacaKeranjang(): ItemKeranjang[] {
   if (typeof window === "undefined") return [];
@@ -23,6 +23,11 @@ export function bacaKeranjang(): ItemKeranjang[] {
 
 export function simpanKeranjang(items: ItemKeranjang[]) {
   localStorage.setItem(KUNCI, JSON.stringify(items));
+}
+
+export function kosongkanKeranjang() {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(KUNCI);
 }
 
 export function hapusItem(key: string): ItemKeranjang[] {
